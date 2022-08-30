@@ -70,6 +70,28 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                    child: Image.asset(
+                      'assets/images/location-icon.png',
+                      width: 64,
+                      height: 64,
+                    ),
+                  ),
+                  const Text(
+                    'UQ Chancellors Place',
+                    style: TextStyle(
+                        fontFamily: 'helvetica-neue',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 44),
+                  )
+                ],
+              ),
+            ),
             const Text(
               'Timetable',
               style: TextStyle(
