@@ -2,7 +2,7 @@ name: Gh-Pages
 
 on:
   push:
-    branches: [ main, feat-add-github-pages-workflow ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -13,4 +13,4 @@ jobs:
       - uses: subosito/flutter-action@v1
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
-          baseHref: /maccas-hot-bbq-sauce-frontend/
+          baseHref: /maccas-hot-bbq-sauce-frontend
