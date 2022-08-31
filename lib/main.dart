@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/themes/style.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,25 +48,33 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Image.asset(
-          'assets/images/TRANSLink.png',
-          width: 217,
-          height: 60,
+        leadingWidth: 600,
+        leading: Container(
+          margin: const EdgeInsets.fromLTRB(36, 0, 0, 0),
+          child: appLogo,
         ),
         actions: <Widget>[
-          Text(
-            _time,
-            style: const TextStyle(
-                fontFamily: 'helvetica-neue',
-                fontWeight: FontWeight.w700,
-                fontSize: 40,
-                color: Colors.black),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 36, 0),
+                child: Text(
+                  _time,
+                  style: const TextStyle(
+                      fontFamily: 'helvetica-neue',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 40,
+                      color: Colors.black),
+                ),
+              )
+            ],
           ),
         ],
         toolbarHeight: 140,
       ),
       body: Container(
-        padding: const EdgeInsets.all(30.0),
+        margin: const EdgeInsets.all(30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
