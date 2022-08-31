@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/themes/style.dart';
 
 void main() {
@@ -136,78 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      return;
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        fixedSize: const Size(109, 74),
-                        side: const BorderSide(color: Colors.black, width: 2)),
-                    child: const Text(
-                      '402',
-                      style: TextStyle(
-                        fontFamily: 'helvetica-neue',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      return;
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        fixedSize: const Size(109, 74),
-                        side: const BorderSide(color: Colors.black, width: 2)),
-                    child: const Text(
-                      '411',
-                      style: TextStyle(
-                        fontFamily: 'helvetica-neue',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      return;
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        fixedSize: const Size(109, 74),
-                        side: const BorderSide(color: Colors.black, width: 2)),
-                    child: const Text(
-                      '412',
-                      style: TextStyle(
-                        fontFamily: 'helvetica-neue',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      return;
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        fixedSize: const Size(109, 74),
-                        side: const BorderSide(color: Colors.black, width: 2)),
-                    child: const Text(
-                      '428',
-                      style: TextStyle(
-                        fontFamily: 'helvetica-neue',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 36,
-                      ),
-                    ),
-                  ),
+                  RouteButton(text: "402", onPressed: () {return;},),
+                  RouteButton(text: "411", onPressed: () {return;},),
+                  RouteButton(text: "412", onPressed: () {return;},),
+                  RouteButton(text: "428", onPressed: () {return;},),
                   const Icon(
                     Icons.keyboard_arrow_right_sharp,
                     size: 100.0,
