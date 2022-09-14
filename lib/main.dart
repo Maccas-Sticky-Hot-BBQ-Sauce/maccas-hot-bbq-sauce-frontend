@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   busStop: 'Toowong',
                   routeColor: '8DC63F',
                   platform: 'Stop B',
-                  time: DateTime.now()),
+                  time: DateTime.now().subtract(const Duration(minutes: 1))),
               BusCard(
                   busNumber: '411',
                   busStop: 'City via Hawken Drive',
@@ -212,6 +212,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   routeColor: '8DC63F',
                   platform: 'Zone B',
                   time: DateTime.now().add(const Duration(minutes: 62))),
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      size: 100.0,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

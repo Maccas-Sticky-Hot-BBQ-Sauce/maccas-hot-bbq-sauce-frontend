@@ -24,7 +24,9 @@ class BusCard extends StatelessWidget {
     String remainingTime = getDuration(time.difference(DateTime.now()));
 
     return GestureDetector(
-      onTap: (){return;},
+      onTap: () {
+        return;
+      },
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 35),
         child: Row(
@@ -79,7 +81,9 @@ class BusCard extends StatelessWidget {
             Row(
               children: <Widget>[
                 Container(
-                  margin: const EdgeInsets.fromLTRB(32.27, 0, 0, 0),
+                  constraints: const BoxConstraints.tightForFinite(
+                      width: 149, height: 98),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 32.27, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -119,6 +123,8 @@ class BusCard extends StatelessWidget {
     String twoDigitMinutes = twoDigits(duration.inMinutes);
     if (duration.inMinutes == 0) {
       return "Arriving";
+    } else if (duration.inMinutes < 0) {
+      return "Departed";
     } else {
       return "$twoDigitMinutes Minutes";
     }
