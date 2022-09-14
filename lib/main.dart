@@ -211,7 +211,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   busStop: 'Toowong',
                   routeColor: '8DC63F',
                   platform: 'Zone B',
-                  time: DateTime.now())
+                  time: DateTime.now()),
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      size: 100.0,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
