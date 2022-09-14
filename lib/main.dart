@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'QLDBus',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'QLD Bus Stop Explorer'),
     );
   }
 }
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   busStop: 'Toowong',
                   routeColor: '8DC63F',
                   platform: 'Stop B',
-                  time: DateTime.now()),
+                  time: DateTime.now().subtract(const Duration(minutes: 1))),
               BusCard(
                   busNumber: '411',
                   busStop: 'City via Hawken Drive',
@@ -205,13 +205,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   busStop: 'City Express',
                   routeColor: '8DC63F',
                   platform: 'Zone D',
-                  time: DateTime.now()),
+                  time: DateTime.now().add(const Duration(minutes: 8))),
               BusCard(
                   busNumber: '402',
                   busStop: 'Toowong',
                   routeColor: '8DC63F',
                   platform: 'Zone B',
-                  time: DateTime.now()),
+                  time: DateTime.now().add(const Duration(minutes: 62))),
               Container(
                 margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
                 child: Row(
