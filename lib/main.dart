@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime now = DateTime.now();
   late String _time;
 
   @override
@@ -240,6 +239,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    return DateFormat('hh:mm').format(dateTime);
+    return DateFormat.Hm().format(dateTime);
   }
 }
