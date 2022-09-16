@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as web;
 import 'package:intl/intl.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/components/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/components/cards/bus_card.dart';
@@ -36,6 +40,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String _time;
+  final LatLng _center = const LatLng(-27.497812511743355, 153.01102855543226);
 
   @override
   void initState() {
@@ -101,6 +106,26 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontSize: 44),
                     )
                   ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                child: AspectRatio(
+                  aspectRatio: 16/9,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: web.GoogleMapsPlugin().buildViewWithConfiguration(
+                          1, (id) {},
+                          widgetConfiguration:
+                            MapWidgetConfiguration(
+                              initialCameraPosition: CameraPosition(target: _center, zoom: 25.0),
+                              textDirection: ui.TextDirection.ltr,
+                            ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const Text(
