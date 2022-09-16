@@ -40,7 +40,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String _time;
-  final LatLng _center = const LatLng(-27.497812511743355, 153.01102855543226);
+  final LatLng _center = const LatLng(-27.4979388928164, 153.01115550580272);
+  final MarkerId _markerId = const MarkerId("uq_chancellors_place");
 
   @override
   void initState() {
@@ -119,9 +120,18 @@ class _MyHomePageState extends State<MyHomePage> {
                           1, (id) {},
                           widgetConfiguration:
                             MapWidgetConfiguration(
-                              initialCameraPosition: CameraPosition(target: _center, zoom: 25.0),
+                              initialCameraPosition: CameraPosition(target: _center, zoom: 20.0),
                               textDirection: ui.TextDirection.ltr,
                             ),
+                          mapObjects: MapObjects(
+                            markers: <Marker>{
+                                Marker(
+                                  markerId: _markerId,
+                                  position: _center,
+                                  infoWindow: const InfoWindow(title: "UQ Chancellors Place")
+                               )
+                            }
+                          )
                         ),
                       )
                     ],
