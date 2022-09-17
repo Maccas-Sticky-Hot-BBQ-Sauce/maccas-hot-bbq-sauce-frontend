@@ -88,6 +88,35 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
+                margin: const EdgeInsets.fromLTRB(0, 20, 0, 40),
+                child: AspectRatio(
+                  aspectRatio: 16/9,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: web.GoogleMapsPlugin().buildViewWithConfiguration(
+                            1, (id) {},
+                            widgetConfiguration:
+                            MapWidgetConfiguration(
+                              initialCameraPosition: CameraPosition(target: _center, zoom: 18.0),
+                              textDirection: ui.TextDirection.ltr,
+                            ),
+                            mapObjects: MapObjects(
+                                markers: <Marker>{
+                                  Marker(
+                                      markerId: _markerId,
+                                      position: _center,
+                                      infoWindow: const InfoWindow(title: "UQ Chancellors Place")
+                                  )
+                                }
+                            )
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: Row(
                   children: <Widget>[
@@ -109,35 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: AspectRatio(
-                  aspectRatio: 16/9,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: web.GoogleMapsPlugin().buildViewWithConfiguration(
-                          1, (id) {},
-                          widgetConfiguration:
-                            MapWidgetConfiguration(
-                              initialCameraPosition: CameraPosition(target: _center, zoom: 20.0),
-                              textDirection: ui.TextDirection.ltr,
-                            ),
-                          mapObjects: MapObjects(
-                            markers: <Marker>{
-                                Marker(
-                                  markerId: _markerId,
-                                  position: _center,
-                                  infoWindow: const InfoWindow(title: "UQ Chancellors Place")
-                               )
-                            }
-                          )
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+
               const Text(
                 'Timetable',
                 style: TextStyle(
