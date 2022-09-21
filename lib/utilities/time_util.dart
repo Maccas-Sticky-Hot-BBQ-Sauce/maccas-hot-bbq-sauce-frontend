@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class TimeUtil {
   static String formatDateTime(DateTime dateTime) {
-    return DateFormat('hh:mm').format(dateTime);
+    return DateFormat.Hm().format(dateTime);
   }
 
   static String getTime(String time) {
