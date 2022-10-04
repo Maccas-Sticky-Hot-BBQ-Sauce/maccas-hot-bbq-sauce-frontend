@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +39,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String _time;
+  final LatLng _center = const LatLng(-27.4979388928164, 153.01115550580272);
+  final String _markerId = "uq_chancellors_place";
 
   @override
   void initState() {
@@ -54,8 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
           time: _time,
           appBar: AppBar(),
         ),
-        body: const Timetable(
-          title: 'Timetable',
-        ));
+        body: ListView(
+          children: [
+            GoogleMapDisplay(center: _center, markerId: _markerId),
+            const Timetable(title: 'Timetable')
+          ],
+        )
+    );
   }
 }
