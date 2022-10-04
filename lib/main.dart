@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/services/api_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: '.env');
+  ApiService.getStopData('4975');
   runApp(const MyApp());
 }
 
