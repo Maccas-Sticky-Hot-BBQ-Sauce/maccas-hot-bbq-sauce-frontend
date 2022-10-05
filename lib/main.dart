@@ -1,14 +1,19 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/services/api_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
 
-
-void main() {
+Future main() async {
+  await dotenv.load(fileName: 'constants.env');
+  ApiService.getStopData(ApiConstants.currentStopId);
   runApp(const MyApp());
 }
 
@@ -65,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
             GoogleMapDisplay(center: _center, markerId: _markerId),
             const Timetable(title: 'Timetable')
           ],
-        )
-    );
+        ));
   }
 }
