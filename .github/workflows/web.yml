@@ -18,4 +18,4 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /maccas-hot-bbq-sauce-frontend/
-          customArgs: --dart-define=BACKEND_API_URL="${{ secrets.BACKEND_API_URL }}",IS_SAMPLE="${{ secrets.IS_SAMPLE }}",STOP_ID="${{ secrets.STOP_ID }}"
+          customArgs: --dart-define=BACKEND_API_URL="${{ secrets.BACKEND_API_URL }}" --dart-define=IS_SAMPLE="${{ secrets.IS_SAMPLE }}" --dart-define=STOP_ID="${{ secrets.STOP_ID }}"
