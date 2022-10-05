@@ -8,4 +8,5 @@ class ApiConstants {
   static String baseUrl =
       dotenv.get('BACKEND_API_URL') + (isSample ? '/sample' : '');
   static String stopsEndpoint = '/stop';
+  static String currentStopId = dotenv.get('STOP_ID', fallback: '4975');
 }
