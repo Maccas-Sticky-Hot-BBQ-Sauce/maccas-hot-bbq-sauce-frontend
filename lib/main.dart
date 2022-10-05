@@ -12,7 +12,7 @@ import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
 
 Future main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: 'constants.env');
   ApiService.getStopData(ApiConstants.currentStopId);
   runApp(const MyApp());
 }
