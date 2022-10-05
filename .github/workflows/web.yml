@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
+      - uses: SpicyPizza/create-envfile@v1.3
+        with:
+          file_name: constants.env
+          envkey_BACKEND_API_URL: ${{ secrets.BACKEND_API_URL }}
+          envkey_IS_SAMPLE: ${{ secrets.IS_SAMPLE }}
+          envkey_STOP_ID: ${{ secrets.STOP_ID }}
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /maccas-hot-bbq-sauce-frontend/
