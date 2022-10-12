@@ -5,17 +5,20 @@ import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 
 class ApiService {
-  // Future<StopModel?> getStopData() async {
-  static Future getStopData(String stopId) async {
+  static Future<StopModel?> getStopData(String stopId) async {
     try {
       Uri url = Uri.parse(
-          ApiConstants.baseUrl + ApiConstants.stopsEndpoint + '?id=' + stopId);
+          '${ApiConstants.baseUrl}${ApiConstants.stopsEndpoint}?id=$stopId');
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        print(json.decode(response.body));
+        StopModel model = stopModelFromJson(response.body);
+        return model;
+      } else {
+        return null;
       }
     } catch (e) {
       log(e.toString());
+      return null;
     }
   }
 }
