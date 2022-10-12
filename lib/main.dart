@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
@@ -44,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String _time;
+  StopModel? currentStop;
   final LatLng _center = const LatLng(-27.4979388928164, 153.01115550580272);
   final String _markerId = "uq_chancellors_place";
 
@@ -56,6 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
               _time = TimeUtil.getTime(_time);
             }));
     super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
   }
 
   @override
@@ -67,7 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: ListView(
           children: [
-            GoogleMapDisplay(center: _center, markerId: _markerId),
+            if (currentStop != null)
+              GoogleMapDisplay(
+                  center: currentStop!.location, markerId: currentStop!.name),
             const Timetable(title: 'Timetable')
           ],
         ));
