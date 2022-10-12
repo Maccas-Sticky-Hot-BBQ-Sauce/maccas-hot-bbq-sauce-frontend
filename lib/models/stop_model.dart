@@ -32,19 +32,24 @@ class StopModel {
     required this.stopTimes,
   });
 
-  factory StopModel.fromJson(Map<String, dynamic> json) => StopModel(
-      id: json["id"],
-      stopId: int.parse(json["stopId"]),
-      stopCode: json["stopCode"],
-      name: json["name"],
-      description: json["description"],
-      location: LatLng(json["latitude"], json["longitude"]),
-      zoneId: json["zoneId"],
-      stopUrl: json["stopUrl"],
-      locationType: json["locationType"],
-      platformCode: json["platformCode"],
-      stopTimes: List<StopTimeModel>.from(json["stopTimes"]
-          .map((stopTime) => StopTimeModel.fromJson(stopTime))));
+  factory StopModel.fromJson(Map<String, dynamic> json) {
+    List<StopTimeModel> stopTimeModel = List<StopTimeModel>.from(
+        json["stopTimes"].map((stopTime) => StopTimeModel.fromJson(stopTime)));
+
+    stopTimeModel.sort((a, b) => a.departure.compareTo(b.departure));
+    return StopModel(
+        id: json["id"],
+        stopId: int.parse(json["stopId"]),
+        stopCode: json["stopCode"],
+        name: json["name"],
+        description: json["description"],
+        location: LatLng(json["latitude"], json["longitude"]),
+        zoneId: json["zoneId"],
+        stopUrl: json["stopUrl"],
+        locationType: json["locationType"],
+        platformCode: json["platformCode"],
+        stopTimes: stopTimeModel);
+  }
 }
 
 enum Direction { inbound, outbound }

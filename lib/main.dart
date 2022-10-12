@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
@@ -63,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _getData() async {
     currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
+    inspect(currentStop);
   }
 
   @override
