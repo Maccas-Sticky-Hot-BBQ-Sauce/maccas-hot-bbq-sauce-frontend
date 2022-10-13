@@ -14,18 +14,17 @@ class Timetable extends StatefulWidget {
 }
 
 class _TimetableState extends State<Timetable> {
-  DateTime now = DateTime.now();
-  int index = 5;
+  DateTime now = DateTime.now().subtract(Duration(days: 2, hours: 5));
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
     StopModel stop = widget.stop;
 
-    Timer.periodic(const Duration(minutes: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 30), (timer) {
       for (int i = index; i < stop.stopTimes.length; i++) {
-        if (stop.stopTimes[i].departure.difference(DateTime.now()).inMinutes <
-            0) {
-          index++;
+        if (stop.stopTimes[i].departure.isBefore(DateTime.now())) {
+          stop.stopTimes.remove(stop.stopTimes[i]);
         } else {
           break;
         }
@@ -127,48 +126,56 @@ class _TimetableState extends State<Timetable> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 60, 48.53, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      index >= 5 ? index -= 5 : index = 0;
-                    },
-                    child: const Icon(
-                      Icons.keyboard_arrow_up_sharp,
-                      size: 100.0,
-                    ),
+            if (stop.stopTimes.length - 1 - index > 0) ...[
+              if ((stop.stopTimes.length - 1) - index > 5)
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 60, 48.53, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          index >= 5 ? index -= 5 : index = 0;
+                        },
+                        child: const Icon(
+                          Icons.keyboard_arrow_up_sharp,
+                          size: 100.0,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            for (int i = index; i < index + 5; i++)
-              BusCard(
-                busNumber: stop.stopTimes[i].trip.route.shortName,
-                busStop: stop.stopTimes[i].trip.headsign,
-                routeColor: stop.stopTimes[i].trip.route.routeColor,
-                platform: (stop.platformCode != null) ? stop.platformCode! : '',
-                time: stop.stopTimes[i].arrival,
-              ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      index += 5;
-                    },
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      size: 100.0,
-                    ),
-                  )
-                ],
-              ),
-            ),
+                ),
+              for (int i = index;
+                  i < index + 5 && i < stop.stopTimes.length;
+                  i++)
+                BusCard(
+                  busNumber: stop.stopTimes[i].trip.route.shortName,
+                  busStop: stop.stopTimes[i].trip.headsign,
+                  routeColor: stop.stopTimes[i].trip.route.routeColor,
+                  platform:
+                      (stop.platformCode != null) ? stop.platformCode! : '',
+                  time: stop.stopTimes[i].arrival,
+                ),
+              if ((stop.stopTimes.length - 1) - index > 5)
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          index += 5;
+                        },
+                        child: const Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          size: 100.0,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+            ] else
+              const Text('tai'),
           ],
         ),
       ),
