@@ -1,31 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'QLDBus',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Timetable(title: 'QLD Bus Stop Explorer'),
-    );
-  }
-}
-
 class Timetable extends StatefulWidget {
-  const Timetable({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  final StopModel stopModel;
+  const Timetable({Key? key, required this.stopModel}) : super(key: key);
 
   @override
   State<Timetable> createState() => _TimetableState();
@@ -33,11 +13,6 @@ class Timetable extends StatefulWidget {
 
 class _TimetableState extends State<Timetable> {
   DateTime now = DateTime.now();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +35,9 @@ class _TimetableState extends State<Timetable> {
                       height: 64,
                     ),
                   ),
-                  const Text(
-                    'UQ Chancellors Place',
-                    style: TextStyle(
+                  Text(
+                    widget.stopModel.name,
+                    style: const TextStyle(
                         fontFamily: 'helvetica-neue',
                         fontWeight: FontWeight.w500,
                         fontSize: 44),

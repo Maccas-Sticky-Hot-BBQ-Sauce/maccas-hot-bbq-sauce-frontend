@@ -74,13 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
           time: _time,
           appBar: AppBar(),
         ),
-        body: ListView(
-          children: [
-            if (currentStop != null)
-              GoogleMapDisplay(
-                  center: currentStop!.location, markerId: currentStop!.name),
-            const Timetable(title: 'Timetable')
-          ],
-        ));
+        body: (currentStop != null)
+            ? ListView(
+                children: [
+                  GoogleMapDisplay(
+                      center: currentStop!.location,
+                      markerId: currentStop!.name),
+                  Timetable(
+                    stopModel: currentStop!,
+                  )
+                ],
+              )
+            : PageView());
   }
 }
