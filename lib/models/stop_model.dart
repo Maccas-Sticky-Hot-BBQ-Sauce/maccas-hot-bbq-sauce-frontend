@@ -40,7 +40,6 @@ class StopModel {
     List<StopTimeModel> validStopTimes = List<StopTimeModel>.from(stopTimeModel.where((stopTime) => ValidateStopTimeUtil.valid(stopTime)));
     validStopTimes.sort((a, b) => a.departure.compareTo(b.departure));
 
-    // print(validStopTimes);
     return StopModel(
         id: json["id"],
         stopId: int.parse(json["stopId"]),
