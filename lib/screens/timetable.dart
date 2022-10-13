@@ -149,9 +149,9 @@ class _TimetableState extends State<Timetable> {
                   i < index + 5 && i < stop.stopTimes.length;
                   i++)
                 BusCard(
-                  busNumber: stop.stopTimes[i].trip.route.shortName,
-                  busStop: stop.stopTimes[i].trip.headsign,
-                  routeColor: stop.stopTimes[i].trip.route.routeColor,
+                  busNumber: stop.stopTimes[i].trip!.route.shortName,
+                  busStop: stop.stopTimes[i].trip!.headsign,
+                  routeColor: stop.stopTimes[i].trip!.route.routeColor,
                   platform:
                       (stop.platformCode != null) ? stop.platformCode! : '',
                   time: stop.stopTimes[i].arrival,
