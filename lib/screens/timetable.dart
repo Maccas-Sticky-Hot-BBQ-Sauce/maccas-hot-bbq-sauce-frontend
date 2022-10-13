@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
 class Timetable extends StatefulWidget {
-  final StopModel stopModel;
-  const Timetable({Key? key, required this.stopModel}) : super(key: key);
+  const Timetable({Key? key, required this.stop}) : super(key: key);
+
+  final StopModel stop;
 
   @override
   State<Timetable> createState() => _TimetableState();
@@ -16,6 +18,7 @@ class _TimetableState extends State<Timetable> {
 
   @override
   Widget build(BuildContext context) {
+    StopModel stop = widget.stop;
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.all(30.0),
@@ -36,7 +39,7 @@ class _TimetableState extends State<Timetable> {
                     ),
                   ),
                   Text(
-                    widget.stopModel.name,
+                    stop.name,
                     style: const TextStyle(
                         fontFamily: 'helvetica-neue',
                         fontWeight: FontWeight.w500,
@@ -123,36 +126,15 @@ class _TimetableState extends State<Timetable> {
                 ],
               ),
             ),
-            BusCard(
-                busNumber: '402',
-                busStop: 'Toowong',
-                routeColor: '8DC63F',
-                platform: 'Stop B',
-                time: DateTime.now().subtract(const Duration(minutes: 1))),
-            BusCard(
-                busNumber: '411',
-                busStop: 'City via Hawken Drive',
-                routeColor: '8DC63F',
-                platform: 'Zone C',
-                time: DateTime.now()),
-            BusCard(
-                busNumber: '428',
-                busStop: 'Indooroopilly Shopping Centre',
-                routeColor: '8DC63F',
-                platform: 'Zone A',
-                time: DateTime.now()),
-            BusCard(
-                busNumber: '412',
-                busStop: 'City Express',
-                routeColor: '8DC63F',
-                platform: 'Zone D',
-                time: DateTime.now().add(const Duration(minutes: 8))),
-            BusCard(
-                busNumber: '402',
-                busStop: 'Toowong',
-                routeColor: '8DC63F',
-                platform: 'Zone B',
-                time: DateTime.now().add(const Duration(minutes: 62))),
+            for (StopTimeModel stopTime in stop.stopTimes) ...[
+              BusCard(
+                busNumber: stopTime.trip.route.shortName,
+                busStop: stopTime.trip.headsign,
+                routeColor: stopTime.trip.route.routeColor,
+                platform: "",
+                time: stopTime.arrival,
+              ),
+            ],
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
               child: Row(

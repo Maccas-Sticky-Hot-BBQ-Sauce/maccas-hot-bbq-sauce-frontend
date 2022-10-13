@@ -32,7 +32,21 @@ class GoogleMapDisplay extends StatelessWidget {
                             position: center,
                             infoWindow:
                                 const InfoWindow(title: "UQ Chancellors Place"))
-                      })),
+                      }, polylines: <Polyline>{
+                        const Polyline(
+                          polylineId: PolylineId("402"),
+                          points: [
+                            LatLng(-27.563359, 153.080421),
+                            LatLng(-27.564184, 153.081192),
+                          ],
+                          width: 8,
+                          color: Colors.lightGreen,
+                        )
+                      }),
+                      mapConfiguration: const MapConfiguration(
+                        zoomControlsEnabled: false,
+                        zoomGesturesEnabled: false,
+                      )),
             )
           ],
         ),
