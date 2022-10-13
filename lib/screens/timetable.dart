@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
@@ -15,10 +15,23 @@ class Timetable extends StatefulWidget {
 
 class _TimetableState extends State<Timetable> {
   DateTime now = DateTime.now();
+  int index = 5;
 
   @override
   Widget build(BuildContext context) {
     StopModel stop = widget.stop;
+
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      for (int i = index; i < stop.stopTimes.length; i++) {
+        if (stop.stopTimes[i].departure.difference(DateTime.now()).inMinutes <
+            0) {
+          index++;
+        } else {
+          break;
+        }
+      }
+    });
+
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.all(30.0),
@@ -118,32 +131,41 @@ class _TimetableState extends State<Timetable> {
               margin: const EdgeInsets.fromLTRB(0, 60, 48.53, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Icon(
-                    Icons.keyboard_arrow_up_sharp,
-                    size: 100.0,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      index >= 5 ? index -= 5 : index = 0;
+                    },
+                    child: const Icon(
+                      Icons.keyboard_arrow_up_sharp,
+                      size: 100.0,
+                    ),
                   ),
                 ],
               ),
             ),
-            for (StopTimeModel stopTime in stop.stopTimes) ...[
+            for (int i = index; i < index + 5; i++)
               BusCard(
-                busNumber: stopTime.trip.route.shortName,
-                busStop: stopTime.trip.headsign,
-                routeColor: stopTime.trip.route.routeColor,
-                platform: "",
-                time: stopTime.arrival,
+                busNumber: stop.stopTimes[i].trip.route.shortName,
+                busStop: stop.stopTimes[i].trip.headsign,
+                routeColor: stop.stopTimes[i].trip.route.routeColor,
+                platform: (stop.platformCode != null) ? stop.platformCode! : '',
+                time: stop.stopTimes[i].arrival,
               ),
-            ],
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    size: 100.0,
-                  ),
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      index += 5;
+                    },
+                    child: const Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      size: 100.0,
+                    ),
+                  )
                 ],
               ),
             ),
