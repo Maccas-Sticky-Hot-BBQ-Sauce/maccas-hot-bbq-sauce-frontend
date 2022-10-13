@@ -21,7 +21,15 @@ class ValidateStopTimeUtil {
 
   static bool runningToday (CalendarModel calendar){
     String today = DateFormat('EEEE').format(DateTime.now()).toUpperCase();
-    return (!calendar.days.contains(today)) ? false : true;
+    if (!calendar.days.contains(today)){
+      return false;
+    }
+    else if (calendar.startDate.isAfter(DateTime.now()) && calendar.endDate.isBefore(DateTime.now())) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   static bool afterNow(StopTimeModel stopTime){
