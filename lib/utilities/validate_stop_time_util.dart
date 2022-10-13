@@ -6,9 +6,11 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 
 class ValidateStopTimeUtil {
 
+  static DateTime now = DateTime.now();
+
   static bool valid(StopTimeModel stopTime){
     for (ExceptionModel exception in stopTime.trip.exceptions ?? []) {
-        if (DateUtils.isSameDay(exception.date, DateTime.now())) {
+        if (DateUtils.isSameDay(exception.date, now)) {
           return false;
         }
     }
@@ -20,11 +22,12 @@ class ValidateStopTimeUtil {
   }
 
   static bool runningToday (CalendarModel calendar){
-    String today = DateFormat('EEEE').format(DateTime.now()).toUpperCase();
+    String today = DateFormat('EEEE').format(now).toUpperCase();
     if (!calendar.days.contains(today)){
       return false;
     }
-    else if (calendar.startDate.isAfter(DateTime.now()) && calendar.endDate.isBefore(DateTime.now())) {
+    else if (calendar.startDate.isAfter(now) ||
+        calendar.endDate.isBefore(now)) {
       return false;
     }
     else {
@@ -33,6 +36,6 @@ class ValidateStopTimeUtil {
   }
 
   static bool afterNow(StopTimeModel stopTime){
-    return stopTime.departure.isAfter(DateTime.now()) ? true : false;
+    return stopTime.departure.isAfter(now) ? true : false;
   }
 }
