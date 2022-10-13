@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/utilities/validate_stop_time_util.dart';
 
 StopModel stopModelFromJson(String str) => StopModel.fromJson(json.decode(str));
 
@@ -36,7 +37,9 @@ class StopModel {
     List<StopTimeModel> stopTimeModel = List<StopTimeModel>.from(
         json["stopTimes"].map((stopTime) => StopTimeModel.fromJson(stopTime)));
 
-    stopTimeModel.sort((a, b) => a.departure.compareTo(b.departure));
+    List<StopTimeModel> validStopTimes = List<StopTimeModel>.from(stopTimeModel.where((stopTime) => ValidateStopTimeUtil.valid(stopTime)));
+    validStopTimes.sort((a, b) => a.departure.compareTo(b.departure));
+
     return StopModel(
         id: json["id"],
         stopId: int.parse(json["stopId"]),
@@ -48,7 +51,7 @@ class StopModel {
         stopUrl: json["stopUrl"],
         locationType: json["locationType"],
         platformCode: json["platformCode"],
-        stopTimes: stopTimeModel);
+        stopTimes: validStopTimes);
   }
 }
 
