@@ -5,6 +5,9 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/exception_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/route_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/shape_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
+
+TripModel tripModelFromJson(String str) => TripModel.fromJson(json.decode(str));
 
 class TripModel {
   String id;
@@ -18,6 +21,7 @@ class TripModel {
   CalendarModel calendar;
   List<ExceptionModel>? exceptions;
   RouteModel route;
+  List<StopTimeModel>? stopTimes;
 
   TripModel({
     required this.id,
@@ -31,6 +35,7 @@ class TripModel {
     required this.calendar,
     required this.exceptions,
     required this.route,
+    required this.stopTimes,
   });
 
   factory TripModel.fromJson(Map<String, dynamic> json) => TripModel(
@@ -51,5 +56,9 @@ class TripModel {
             ? json['exceptions'].map((exc) => ExceptionModel.fromJson(exc))
             : []),
         route: RouteModel.fromJson(json['route']),
+        stopTimes: List<StopTimeModel>.from(json['stopTimes'] != null
+            ? json['stopTimes']
+                .map((stopTime) => StopTimeModel.fromJson(stopTime))
+            : []),
       );
 }

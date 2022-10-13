@@ -15,6 +15,7 @@ class ApiConstants {
               : dotenv.get('BACKEND_API_URL')) +
           (isSample ? '/sample' : '');
   static String stopsEndpoint = '/stop';
+  static String tripsEndpoint = '/trip';
   static String currentStopId =
       const String.fromEnvironment("STOP_ID").isNotEmpty
           ? const String.fromEnvironment("STOP_ID")

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 
 class StopTimeModel {
@@ -9,7 +10,8 @@ class StopTimeModel {
   int sequence;
   String pickupType;
   String dropOffType;
-  TripModel trip;
+  TripModel? trip;
+  StopModel? stop;
 
   StopTimeModel(
       {required this.id,
@@ -18,7 +20,8 @@ class StopTimeModel {
       required this.sequence,
       required this.pickupType,
       required this.dropOffType,
-      required this.trip});
+      required this.trip,
+      required this.stop});
 
   factory StopTimeModel.fromJson(Map<String, dynamic> json) {
     DateTime now = DateTime.now();
@@ -44,6 +47,7 @@ class StopTimeModel {
         sequence: json["sequence"],
         pickupType: json["pickupType"],
         dropOffType: json["dropOffType"],
-        trip: TripModel.fromJson(json["trip"]));
+        trip: json['trip'] != null ? TripModel.fromJson(json["trip"]) : null,
+        stop: json['stop'] != null ? StopModel.fromJson(json['stop']) : null);
   }
 }
