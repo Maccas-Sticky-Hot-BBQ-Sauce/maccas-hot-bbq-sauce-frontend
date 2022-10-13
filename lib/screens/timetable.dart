@@ -4,7 +4,6 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
-
 class Timetable extends StatefulWidget {
   const Timetable({Key? key, required this.stop}) : super(key: key);
 
@@ -132,12 +131,11 @@ class _TimetableState extends State<Timetable> {
                 ],
               ),
             ),
-            for (StopTimeModel stopTime in stop.stopTimes)
-            ...[
+            for (StopTimeModel stopTime in stop.stopTimes) ...[
               BusCard(
-                busNumber: stopTime.trip.route.shortName,
-                busStop: stopTime.trip.headsign,
-                routeColor: stopTime.trip.route.routeColor,
+                busNumber: stopTime.trip!.route.shortName,
+                busStop: stopTime.trip!.headsign,
+                routeColor: stopTime.trip!.route.routeColor,
                 platform: "",
                 time: stopTime.arrival,
               ),

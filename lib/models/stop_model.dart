@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
@@ -34,11 +35,19 @@ class StopModel {
   });
 
   factory StopModel.fromJson(Map<String, dynamic> json) {
-    List<StopTimeModel> stopTimeModel = List<StopTimeModel>.from(
-        json["stopTimes"].map((stopTime) => StopTimeModel.fromJson(stopTime)));
+    List<StopTimeModel> validStopTimes;
 
-    List<StopTimeModel> validStopTimes = List<StopTimeModel>.from(stopTimeModel.where((stopTime) => ValidateStopTimeUtil.valid(stopTime)));
-    validStopTimes.sort((a, b) => a.departure.compareTo(b.departure));
+    if (json['stopTimes'] != null) {
+      List<StopTimeModel> stopTimeModel = List<StopTimeModel>.from(
+          json["stopTimes"]
+              .map((stopTime) => StopTimeModel.fromJson(stopTime)));
+
+      validStopTimes = List<StopTimeModel>.from(stopTimeModel
+          .where((stopTime) => ValidateStopTimeUtil.valid(stopTime)));
+      validStopTimes.sort((a, b) => a.departure.compareTo(b.departure));
+    } else {
+      validStopTimes = [];
+    }
 
     return StopModel(
         id: json["id"],
