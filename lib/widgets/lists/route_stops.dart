@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/stop_card.dart';
 
-import '../models/stop_time_model.dart';
+import '../../models/stop_time_model.dart';
 
 class RouteStops extends StatefulWidget {
   final TripModel? trip;
@@ -28,6 +28,7 @@ class _RouteStopsState extends State<RouteStops> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
               child: Row(
                 children: <Widget>[
+
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
                     child: const Icon(
