@@ -19,7 +19,6 @@ class BusCard extends StatelessWidget {
       required this.onTap})
       : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     int routeColorInt = int.parse('0xFF$routeColor');
@@ -29,7 +28,7 @@ class BusCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(5, 17.5, 5, 17.5),
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 35),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
