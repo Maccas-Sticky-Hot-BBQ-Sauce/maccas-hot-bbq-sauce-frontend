@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/utilities/google_maps_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/route_stops.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
@@ -76,7 +77,7 @@ class TripScreenState extends State<TripScreen> {
                 zoom: 13.5,
                 polylineId: trip!.route.routeId,
                 polylineShape: trip!.shapes,
-                mapId: int.parse(trip!.route.shortName),
+                mapId: GoogleMapsUtil.parseRoute(trip!.route.shortName),
             ),
             RouteStops(
               trip: trip!,

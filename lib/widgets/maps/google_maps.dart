@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as web;
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/shape_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/utilities/google_maps_util.dart';
 
 class GoogleMapDisplay extends StatelessWidget {
   final LatLng center;
@@ -22,14 +22,7 @@ class GoogleMapDisplay extends StatelessWidget {
     this.zoom,
     required this.mapId,
   }) : super(key: key);
-
-  List<LatLng> polylinePoints(){
-    List<LatLng> toReturn = [];
-    for (ShapeModel shape in polylineShape!){
-      toReturn.add(shape.location);
-    }
-    return toReturn;
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +56,7 @@ class GoogleMapDisplay extends StatelessWidget {
                       <Polyline>{
                             Polyline(
                               polylineId: PolylineId(polylineId!),
-                              points: polylinePoints(),
+                              points: GoogleMapsUtil.polylinePoints(polylineShape!),
                               width: 6,
                               color: Colors.lightGreen,
                             )
