@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/landmark_card.dart';
 
 class AroundMe extends StatefulWidget {
-  final StopModel stop;
+  final List<LandmarkModel> landmarks;
 
-  const AroundMe({super.key, required this.stop});
+  const AroundMe({super.key, required this.landmarks});
 
   @override
   State<AroundMe> createState() => _AroundMeState();
@@ -14,6 +15,7 @@ class _AroundMeState extends State<AroundMe> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
+    List<LandmarkModel> landmarks = widget.landmarks;
     return Column(
       children: <Widget>[
         Row(
@@ -21,10 +23,29 @@ class _AroundMeState extends State<AroundMe> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                index >= 5 ? index -= 5 : index = 0;
+                index >= 3 ? index -= 3 : index = 0;
               },
               child: const Icon(
                 Icons.keyboard_arrow_up_sharp,
+                size: 100.0,
+              ),
+            ),
+          ],
+        ),
+        for (int i = index; i < index + 3; i++)
+          const LandmarkCard(
+            name: 'UQ Biological Science Library',
+            distance: 300,
+          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                index >= 3 ? index += 3 : index = 0;
+              },
+              child: const Icon(
+                Icons.keyboard_arrow_down_sharp,
                 size: 100.0,
               ),
             ),

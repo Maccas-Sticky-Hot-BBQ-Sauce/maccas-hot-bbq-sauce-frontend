@@ -128,6 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontFamily: 'helvetica-neue',
                                     fontWeight: FontWeight.w700,
                                     fontSize: 44,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Color(0xFFF6DB00),
                                     color: Color(0xFF1B4B87)),
                               )
                             : const Text(
@@ -151,6 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontFamily: 'helvetica-neue',
                                   fontWeight: FontWeight.w700,
                                   fontSize: 44,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Color(0xFFF6DB00),
                                   color: Color(0xFF1B4B87)),
                             )
                           : const Text(
@@ -165,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ]),
                   displayState == 'TIMETABLE'
                       ? Timetable(stop: currentStop!)
-                      : AroundMe(stop: currentStop!),
+                      : AroundMe(landmarks: landmarks),
                 ],
               ),
             ),
