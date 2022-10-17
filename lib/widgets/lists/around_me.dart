@@ -42,7 +42,9 @@ class _AroundMeState extends State<AroundMe> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                index >= 3 ? index += 3 : index = 0;
+                index + 3 > landmarks.length - 1
+                    ? index += 3
+                    : index = landmarks.length - 1;
               },
               child: const Icon(
                 Icons.keyboard_arrow_down_sharp,
