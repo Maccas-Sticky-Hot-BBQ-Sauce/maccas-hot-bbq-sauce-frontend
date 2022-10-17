@@ -10,17 +10,17 @@ import '../models/trip_model.dart';
 import '../services/api_service.dart';
 import '../widgets/appbar/appbar.dart';
 
-class RouteStopsScreen extends StatefulWidget {
+class TripScreen extends StatefulWidget {
 
-  const RouteStopsScreen({Key? key, required this.tripId}) : super(key: key);
+  const TripScreen({Key? key, required this.tripId}) : super(key: key);
 
   final String tripId;
 
   @override
-  State<StatefulWidget> createState() => RouteStopsScreenState();
+  State<StatefulWidget> createState() => TripScreenState();
 }
 
-class RouteStopsScreenState extends State<RouteStopsScreen> {
+class TripScreenState extends State<TripScreen> {
   late String _time;
   TripModel? trip;
 
