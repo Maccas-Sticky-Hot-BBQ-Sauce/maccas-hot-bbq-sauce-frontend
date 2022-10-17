@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/stop_card.dart';
 
-import '../../models/stop_time_model.dart';
-
 class RouteStops extends StatefulWidget {
-  final TripModel? trip;
-  const RouteStops({Key? key, required this.trip}) : super(key: key);
+  final TripModel trip;
+  final StopTimeModel stopTime;
+  final String? platform;
+  final String stopId;
+  const RouteStops(
+      {Key? key,
+      required this.trip,
+      required this.stopTime,
+      this.platform,
+      required this.stopId})
+      : super(key: key);
 
   @override
   State<RouteStops> createState() => _RouteStopsState();
 }
 
 class _RouteStopsState extends State<RouteStops> {
+  int index = 0;
+  int currentStopIndex = 0;
+
+  void initState() {
+    super.initState();
+    currentStopIndex = getIndex(widget.trip, widget.stopId);
+    index = currentStopIndex - currentStopIndex % 5;
+  }
 
   @override
   Widget build(BuildContext context) {
-    TripModel? trip = widget.trip;
+    TripModel trip = widget.trip;
+    StopTimeModel stopTime = widget.stopTime;
+    String? platform = widget.platform;
+
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.all(30.0),
@@ -37,8 +58,7 @@ class _RouteStopsState extends State<RouteStops> {
                         child: const Icon(
                           Icons.arrow_back_rounded,
                           size: 64,
-                        )
-                    ),
+                        )),
                   ),
                   const Text(
                     "Details",
@@ -50,21 +70,58 @@ class _RouteStopsState extends State<RouteStops> {
                 ],
               ),
             ),
-            for (StopTimeModel stopTimes in trip!.stopTimes!) ...[
-              StopCard(
-                  stopName: stopTimes.stop!.name,
-                  stoppingTime: stopTimes.arrival,
+            BusCard(
+                busNumber: stopTime.trip!.route.shortName,
+                busStop: stopTime.trip!.headsign,
+                routeColor: stopTime.trip!.route.routeColor,
+                platform: platform ?? "",
+                time: stopTime.arrival,
+                onTap: () {}),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 70),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      index < 5 ? index = 0 : index -= 5;
+                    },
+                    child: Icon(
+                      Icons.keyboard_arrow_up_sharp,
+                      size: 100.0,
+                      color: index - 5 < 0
+                          ? const Color(0xFF8C8C8C)
+                          : const Color(0xFF222222),
+                    ),
+                  )
+                ],
               ),
-            ],
+            ),
+            for (int i = index; i < index + 5; i++)
+              StopCard(
+                stopName: trip.stopTimes![i].stop!.name,
+                stoppingTime: trip.stopTimes![i].arrival,
+                color: (i < currentStopIndex) ? 0xFF8C8C8C : 0xFF222222,
+              ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    size: 100.0,
-                  ),
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      index + 5 > trip.stopTimes!.length - 5
+                          ? index = trip.stopTimes!.length - 5
+                          : index += 5;
+                    },
+                    child: Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      size: 100.0,
+                      color: index + 5 > trip.stopTimes!.length - 1
+                          ? const Color(0xFF8C8C8C)
+                          : const Color(0xFF222222),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -72,5 +129,10 @@ class _RouteStopsState extends State<RouteStops> {
         ),
       ),
     );
+  }
+
+  int getIndex(TripModel trip, String stopId) {
+    return trip.stopTimes!
+        .indexWhere((stopTime) => stopTime.stop!.id == stopId);
   }
 }
