@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String _time;
   StopModel? currentStop;
   TripModel? trip;
+  List<LandmarkModel> landmarks = [];
 
   @override
   void initState() {
@@ -62,6 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void _getData() async {
     currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
     inspect(currentStop);
+    landmarks =
+        await ApiService.getLandmarksFromStop(ApiConstants.currentStopId);
+    inspect(landmarks);
   }
 
   @override
