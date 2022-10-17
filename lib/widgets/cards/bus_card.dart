@@ -126,7 +126,7 @@ class BusCard extends StatelessWidget {
     } else if (duration.inMinutes < 0) {
       return "Departed";
     } else {
-      return "$twoDigitMinutes Minutes";
+      return "$twoDigitMinutes Mins";
     }
   }
 }

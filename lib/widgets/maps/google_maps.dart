@@ -24,7 +24,7 @@ class GoogleMapDisplay extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 20, 0, 40),
       child: AspectRatio(
-        aspectRatio: 16/9,
+        aspectRatio: 16 / 9,
         child: Column(
           children: [
             Expanded(
