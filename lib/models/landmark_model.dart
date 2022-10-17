@@ -14,6 +14,8 @@ class LandmarkModel {
   double distance;
   double? rating;
   String? iconUrl;
+  String? description;
+  String? url;
 
   LandmarkModel({
     required this.id,
@@ -23,15 +25,18 @@ class LandmarkModel {
     required this.distance,
     required this.rating,
     required this.iconUrl,
+    required this.description,
+    required this.url,
   });
 
   factory LandmarkModel.fromJson(Map<String, dynamic> json) => LandmarkModel(
-        id: json['id'],
-        location: LatLng(json['latitude'], json['longitude']),
-        name: json['name'],
-        imgB64: json['image'],
-        distance: json['distance'],
-        rating: json['rating'],
-        iconUrl: json['iconUrl'],
-      );
+      id: json['id'],
+      location: LatLng(json['latitude'], json['longitude']),
+      name: json['name'],
+      imgB64: json['image'],
+      distance: json['distance'],
+      rating: json['rating'],
+      iconUrl: json['iconUrl'],
+      description: json['description'],
+      url: json['url']);
 }
