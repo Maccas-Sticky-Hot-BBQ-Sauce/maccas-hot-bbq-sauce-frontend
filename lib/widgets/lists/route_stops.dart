@@ -9,8 +9,13 @@ class RouteStops extends StatefulWidget {
   final TripModel trip;
   final StopTimeModel stopTime;
   final String? platform;
+  final String stopId;
   const RouteStops(
-      {Key? key, required this.trip, required this.stopTime, this.platform})
+      {Key? key,
+      required this.trip,
+      required this.stopTime,
+      this.platform,
+      required this.stopId})
       : super(key: key);
 
   @override
@@ -18,13 +23,21 @@ class RouteStops extends StatefulWidget {
 }
 
 class _RouteStopsState extends State<RouteStops> {
+  int index = 0;
+  int currentStopIndex = 0;
+
+  void initState() {
+    super.initState();
+    currentStopIndex = getIndex(widget.trip, widget.stopId);
+    index = currentStopIndex - currentStopIndex % 5;
+  }
+
   @override
   Widget build(BuildContext context) {
     TripModel trip = widget.trip;
     StopTimeModel stopTime = widget.stopTime;
     String? platform = widget.platform;
-    int currentStopIndex = getIndex(trip);
-    int index = currentStopIndex - (currentStopIndex % 5);
+
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.all(30.0),
@@ -86,8 +99,10 @@ class _RouteStopsState extends State<RouteStops> {
             ),
             for (int i = index; i < index + 5; i++)
               StopCard(
-                  stopName: trip.stopTimes![i].stop!.name,
-                  stoppingTime: trip.stopTimes![i].arrival),
+                stopName: trip.stopTimes![i].stop!.name,
+                stoppingTime: trip.stopTimes![i].arrival,
+                color: (i < currentStopIndex) ? 0xFF8C8C8C : 0xFF222222,
+              ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
               child: Row(
@@ -116,8 +131,8 @@ class _RouteStopsState extends State<RouteStops> {
     );
   }
 
-  static int getIndex(TripModel trip) {
+  int getIndex(TripModel trip, String stopId) {
     return trip.stopTimes!
-        .indexWhere((stopTime) => stopTime.trip!.id == trip.id);
+        .indexWhere((stopTime) => stopTime.stop!.id == stopId);
   }
 }

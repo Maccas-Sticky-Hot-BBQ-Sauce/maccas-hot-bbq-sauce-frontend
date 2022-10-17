@@ -13,12 +13,17 @@ import '../widgets/appbar/appbar.dart';
 
 class TripScreen extends StatefulWidget {
   const TripScreen(
-      {Key? key, required this.tripId, this.platform, required this.stopTime})
+      {Key? key,
+      required this.tripId,
+      this.platform,
+      required this.stopTime,
+      required this.stopId})
       : super(key: key);
 
   final String tripId;
   final String? platform;
   final StopTimeModel stopTime;
+  final String stopId;
 
   @override
   State<StatefulWidget> createState() => TripScreenState();
@@ -57,6 +62,7 @@ class TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     StopTimeModel stopTime = widget.stopTime;
     String? platform = widget.platform;
+    String stopId = widget.stopId;
     return Scaffold(
         appBar: AppBarWidget(
           time: _time,
@@ -72,6 +78,7 @@ class TripScreenState extends State<TripScreen> {
               trip: trip!,
               stopTime: stopTime,
               platform: platform,
+              stopId: stopId,
             ),
           ]
         ]));

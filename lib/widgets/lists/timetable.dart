@@ -163,6 +163,7 @@ class _TimetableState extends State<Timetable> {
                             tripId: stop.stopTimes[i].trip!.tripId,
                             platform: stop.platformCode,
                             stopTime: stop.stopTimes[i],
+                            stopId: stop.id,
                           ),
                         ));
                   },
