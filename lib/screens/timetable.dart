@@ -14,18 +14,17 @@ class Timetable extends StatefulWidget {
 }
 
 class _TimetableState extends State<Timetable> {
-  DateTime now = DateTime.now().subtract(Duration(days: 2, hours: 5));
   int index = 0;
 
   @override
   Widget build(BuildContext context) {
     StopModel stop = widget.stop;
 
-    Timer.periodic(const Duration(seconds: 30), (timer) {
+    Timer.periodic(const Duration(seconds: 10), (timer) {
       for (int i = index; i < stop.stopTimes.length; i++) {
-        if (stop.stopTimes[i].departure.isBefore(DateTime.now())) {
-          stop.stopTimes.remove(stop.stopTimes[i]);
-        } else {
+        if (stop.stopTimes[i].departure.isAfter(DateTime.now())) {
+          stop.stopTimes.removeRange(0, i);
+          index = 0;
           break;
         }
       }
