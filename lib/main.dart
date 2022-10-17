@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/screens/timetable.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/services/api_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -63,11 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _getData() async {
     currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
     inspect(currentStop);
-    if (currentStop!.stopTimes.isNotEmpty) {
-      trip = (await ApiService.getStopTimesFromTrip(
-          currentStop!.stopTimes[0].trip!.tripId));
-      inspect(trip);
-    }
   }
 
   @override

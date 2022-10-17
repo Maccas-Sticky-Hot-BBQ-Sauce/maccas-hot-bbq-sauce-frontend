@@ -7,6 +7,7 @@ class BusCard extends StatelessWidget {
   final String routeColor;
   final String platform;
   final DateTime time;
+  final GestureTapCallback onTap;
 
   const BusCard(
       {Key? key,
@@ -14,7 +15,8 @@ class BusCard extends StatelessWidget {
       required this.busStop,
       required this.routeColor,
       required this.platform,
-      required this.time})
+      required this.time,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -23,10 +25,8 @@ class BusCard extends StatelessWidget {
     String formattedTime = DateFormat('kk:mm').format(time);
     String remainingTime = getDuration(time.difference(DateTime.now()));
 
-    return GestureDetector(
-      onTap: () {
-        return;
-      },
+    return InkWell(
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 35),
         child: Row(
