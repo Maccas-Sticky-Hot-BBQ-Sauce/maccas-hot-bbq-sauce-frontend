@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/constants/time_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/calendar_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/exception_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 
 class ValidateStopTimeUtil {
-  static DateTime now = DateTime.now().subtract(Duration(days: 5));
+  static DateTime now =
+      DateTime.now().subtract(Duration(days: TimeConstants.daySubtract));
 
   static bool valid(StopTimeModel stopTime) {
     for (ExceptionModel exception in stopTime.trip!.exceptions ?? []) {
@@ -35,6 +37,10 @@ class ValidateStopTimeUtil {
   }
 
   static bool afterNow(StopTimeModel stopTime) {
-    return stopTime.departure.isAfter(now) ? true : false;
+    return stopTime.departure
+            .subtract(Duration(days: TimeConstants.daySubtract))
+            .isAfter(now)
+        ? true
+        : false;
   }
 }
