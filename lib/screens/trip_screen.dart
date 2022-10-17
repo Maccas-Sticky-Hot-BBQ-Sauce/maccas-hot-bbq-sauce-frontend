@@ -60,8 +60,11 @@ class TripScreenState extends State<TripScreen> {
         body: ListView(children: [
           if (trip != null) ...[
             GoogleMapDisplay(
-                center: trip!.stopTimes![0].stop!.location,
-                zoom: 10.0,
+                center: trip!.stopTimes![((trip!.stopTimes!.length)/2).floor()].stop!.location,
+                zoom: 13.5,
+                polylineId: trip!.route.routeId,
+                polylineShape: trip!.shapes,
+                mapId: int.parse(trip!.route.shortName),
             ),
             RouteStops(trip: trip),
           ]

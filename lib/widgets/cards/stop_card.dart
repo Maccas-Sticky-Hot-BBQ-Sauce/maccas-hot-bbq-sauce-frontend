@@ -4,11 +4,13 @@ import 'package:intl/intl.dart';
 class StopCard extends StatelessWidget {
   final String stopName;
   final DateTime stoppingTime;
+  final Color? textColor;
 
   const StopCard({
     Key? key,
     required this.stopName,
-    required this.stoppingTime
+    required this.stoppingTime,
+    this.textColor
   }) : super(key: key);
 
 
@@ -23,10 +25,11 @@ class StopCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 stopName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'helvetica-neue',
                   fontWeight: FontWeight.w300,
                   fontSize: 32,
+                  color: (textColor != null) ? textColor : Colors.black,
                   ),
                 )
             ],
@@ -37,10 +40,11 @@ class StopCard extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 0, 32.27, 0),
                 child: Text(
                         DateFormat.Hm().format(stoppingTime),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'helvetica-neue',
                           fontWeight: FontWeight.bold,
                           fontSize: 32,
+                          color: (textColor != null) ? textColor : Colors.black,
                           ),
                         )
                     )
