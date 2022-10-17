@@ -8,8 +8,8 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/exception_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 
 class ValidateStopTimeUtil {
-  static DateTime now =
-      DateTime.now().subtract(Duration(days: TimeConstants.daySubtract));
+  static DateTime now = DateTime.now()
+      .subtract(Duration(days: TimeConstants.daySubtract, hours: 12));
 
   static bool valid(StopTimeModel stopTime) {
     for (ExceptionModel exception in stopTime.trip!.exceptions ?? []) {
