@@ -69,7 +69,7 @@ class _TimetableState extends State<Timetable> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 40, 0, 60),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -129,7 +129,7 @@ class _TimetableState extends State<Timetable> {
             if (stop.stopTimes.length - 1 - index > 0) ...[
               if ((stop.stopTimes.length - 1) - index > 5)
                 Container(
-                  margin: const EdgeInsets.fromLTRB(0, 60, 48.53, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -157,9 +157,14 @@ class _TimetableState extends State<Timetable> {
                   time: stop.stopTimes[i].arrival,
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(
-                      builder: (context) => TripScreen(tripId: stop.stopTimes[i].trip!.tripId),
-                    ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TripScreen(
+                            tripId: stop.stopTimes[i].trip!.tripId,
+                            platform: stop.platformCode,
+                            stopTime: stop.stopTimes[i],
+                          ),
+                        ));
                   },
                 ),
               if ((stop.stopTimes.length - 1) - index > 5)
