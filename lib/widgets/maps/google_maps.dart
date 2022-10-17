@@ -16,7 +16,8 @@ class GoogleMapDisplay extends StatelessWidget {
     this.markerId,
     this.polylinePoints,
     this.polylineId,
-    this.zoom}) : super(key: key);
+    this.zoom
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

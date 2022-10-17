@@ -28,13 +28,17 @@ class _RouteStopsState extends State<RouteStops> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
               child: Row(
                 children: <Widget>[
-
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                    child: const Icon(
-                      Icons.arrow_back_rounded,
-                      size: 64,
-                    )
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_rounded,
+                          size: 64,
+                        )
+                    ),
                   ),
                   const Text(
                     "Details",

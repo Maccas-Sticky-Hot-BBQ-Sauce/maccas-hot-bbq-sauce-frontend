@@ -5,6 +5,7 @@ import 'package:maccas_sticky_hot_bbq_sauce/screens/route_stops_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
+
 class Timetable extends StatefulWidget {
   const Timetable({Key? key, required this.stop}) : super(key: key);
 
@@ -25,6 +26,7 @@ class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
     StopModel stop = widget.stop;
+
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.all(30.0),
@@ -142,7 +144,7 @@ class _TimetableState extends State<Timetable> {
                 onTap: () {
                   Navigator.push(
                       context, MaterialPageRoute(
-                        builder: (context) => RouteStopsScreen(stopTime: stopTime),
+                        builder: (context) => RouteStopsScreen(tripId: stopTime.trip!.tripId),
                   ));
                 },
               ),
