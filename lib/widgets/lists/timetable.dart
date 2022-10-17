@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/screens/trip_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
@@ -154,6 +155,12 @@ class _TimetableState extends State<Timetable> {
                   platform:
                       (stop.platformCode != null) ? stop.platformCode! : '',
                   time: stop.stopTimes[i].arrival,
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(
+                      builder: (context) => TripScreen(tripId: stop.stopTimes[i].trip!.tripId),
+                    ));
+                  },
                 ),
               if ((stop.stopTimes.length - 1) - index > 5)
                 Container(
