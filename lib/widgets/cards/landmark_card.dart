@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class LandmarkCard extends StatelessWidget {
@@ -29,11 +31,18 @@ class LandmarkCard extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
-                    child: const Image(
-                      image: ExactAssetImage("assets/images/no-photo.jpg"),
-                      height: 210,
-                      width: 210,
-                    ),
+                    child: image != null
+                        ? Image.memory(
+                            base64Decode(image!),
+                            width: 210,
+                            height: 210,
+                          )
+                        : const Image(
+                            image:
+                                ExactAssetImage("assets/images/no-photo.jpg"),
+                            height: 210,
+                            width: 210,
+                          ),
                   ),
                   Container(
                     width: 643,
