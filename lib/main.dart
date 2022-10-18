@@ -6,6 +6,7 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar_stateful.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/around_me.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/timetable.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
@@ -78,10 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarWidget(
-          time: _time,
-          appBar: AppBar(),
-        ),
+        appBar: const AppBarStateful(),
         body: ListView(children: [
           if (currentStop != null) ...[
             GoogleMapDisplay(

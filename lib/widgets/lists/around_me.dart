@@ -41,6 +41,7 @@ class _AroundMeState extends State<AroundMe> {
           LandmarkCard(
             name: landmarks[i].name,
             distance: landmarks[i].distance,
+            image: landmarks[i].imgB64,
             onTap: () {
               Navigator.push(
                   context,
