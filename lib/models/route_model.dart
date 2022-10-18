@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 class RouteModel {
-  String id;
   String routeId;
   String shortName;
   String longName;
@@ -12,7 +11,6 @@ class RouteModel {
   String textColor;
 
   RouteModel({
-    required this.id,
     required this.routeId,
     required this.shortName,
     required this.longName,
@@ -24,8 +22,7 @@ class RouteModel {
   });
 
   factory RouteModel.fromJson(Map<String, dynamic> json) => RouteModel(
-        id: json['id'],
-        routeId: json['routeId'],
+        routeId: json['id'],
         shortName: json['shortName'],
         longName: json['longName'],
         description: json['description'],
