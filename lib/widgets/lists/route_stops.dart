@@ -8,7 +8,7 @@ class RouteStops extends StatefulWidget {
   final TripModel trip;
   final StopTimeModel stopTime;
   final String? platform;
-  final String stopId;
+  final int stopId;
   const RouteStops(
       {Key? key,
       required this.trip,
@@ -131,8 +131,8 @@ class _RouteStopsState extends State<RouteStops> {
     );
   }
 
-  int getIndex(TripModel trip, String stopId) {
+  int getIndex(TripModel trip, int stopId) {
     return trip.stopTimes!
-        .indexWhere((stopTime) => stopTime.stop!.id == stopId);
+        .indexWhere((stopTime) => stopTime.stop!.stopId == stopId);
   }
 }

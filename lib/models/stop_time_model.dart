@@ -5,6 +5,8 @@ import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 
 class StopTimeModel {
   String id;
+  int stopId;
+  String tripId;
   DateTime arrival;
   DateTime departure;
   int sequence;
@@ -15,6 +17,8 @@ class StopTimeModel {
 
   StopTimeModel(
       {required this.id,
+      required this.stopId,
+      required this.tripId,
       required this.arrival,
       required this.departure,
       required this.sequence,
@@ -30,6 +34,8 @@ class StopTimeModel {
 
     return StopTimeModel(
         id: json["id"],
+        stopId: int.parse(json['stopId']),
+        tripId: json['tripId'],
         arrival: DateTime(
             now.year,
             now.month,

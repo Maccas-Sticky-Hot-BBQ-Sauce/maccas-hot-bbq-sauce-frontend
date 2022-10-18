@@ -8,7 +8,6 @@ import 'package:maccas_sticky_hot_bbq_sauce/utilities/validate_stop_time_util.da
 StopModel stopModelFromJson(String str) => StopModel.fromJson(json.decode(str));
 
 class StopModel {
-  String id;
   int stopId;
   String stopCode;
   String name;
@@ -22,7 +21,6 @@ class StopModel {
   Map<String, String> routes;
 
   StopModel({
-    required this.id,
     required this.stopId,
     required this.stopCode,
     required this.name,
@@ -57,8 +55,7 @@ class StopModel {
     }
 
     return StopModel(
-      id: json["id"],
-      stopId: int.parse(json["stopId"]),
+      stopId: int.parse(json["id"]),
       stopCode: json["stopCode"],
       name: json["name"],
       description: json["description"],

@@ -25,7 +25,7 @@ class TripScreen extends StatefulWidget {
   final String tripId;
   final String? platform;
   final StopTimeModel stopTime;
-  final String stopId;
+  final int stopId;
 
   @override
   State<StatefulWidget> createState() => TripScreenState();
@@ -64,7 +64,7 @@ class TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     StopTimeModel stopTime = widget.stopTime;
     String? platform = widget.platform;
-    String stopId = widget.stopId;
+    int stopId = widget.stopId;
     return Scaffold(
         appBar: AppBarWidget(
           time: _time,
@@ -73,11 +73,11 @@ class TripScreenState extends State<TripScreen> {
         body: ListView(children: [
           if (trip != null) ...[
             GoogleMapDisplay(
-                center: GoogleMapsUtil.getCenter(trip!.shapes),
-                polylineId: trip!.route.routeId,
-                polylineShape: trip!.shapes,
-                mapId: GoogleMapsUtil.parseRoute(trip!.route.shortName),
-                stopTimes: trip!.stopTimes,
+              center: GoogleMapsUtil.getCenter(trip!.shapes!),
+              polylineId: trip!.route.routeId,
+              polylineShape: trip!.shapes,
+              mapId: GoogleMapsUtil.parseRoute(trip!.route.shortName),
+              stopTimes: trip!.stopTimes,
             ),
             RouteStops(
               trip: trip!,
