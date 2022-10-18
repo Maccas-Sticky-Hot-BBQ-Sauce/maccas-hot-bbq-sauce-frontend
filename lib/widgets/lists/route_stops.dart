@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/screens/trip_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/stop_card.dart';
 
@@ -11,10 +13,10 @@ class RouteStops extends StatefulWidget {
   final int stopId;
   const RouteStops(
       {Key? key,
-      required this.trip,
-      required this.stopTime,
-      this.platform,
-      required this.stopId})
+        required this.trip,
+        required this.stopTime,
+        this.platform,
+        required this.stopId})
       : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class RouteStops extends StatefulWidget {
 class _RouteStopsState extends State<RouteStops> {
   int index = 0;
   int currentStopIndex = 0;
+  String pressedStop = "";
 
   @override
   void initState() {
@@ -102,6 +105,26 @@ class _RouteStopsState extends State<RouteStops> {
                 stopName: trip.stopTimes![i].stop!.name,
                 stoppingTime: trip.stopTimes![i].arrival,
                 color: (i < currentStopIndex) ? 0xFF8C8C8C : 0xFF222222,
+                pressedStop: pressedStop,
+                onTap: () {
+                  setState(() {
+                    pressedStop = trip.stopTimes![i].stop!.name;
+                  });
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) =>
+                      TripScreen(
+                          tripId: trip.tripId,
+                          stopTime: stopTime,
+                          stopId: stopTime.stopId,
+                          markers: <Marker>{
+                            Marker(
+                              markerId: MarkerId(trip.stopTimes![i].stop!.name),
+                              position: trip.stopTimes![i].stop!.location
+                            )
+                          },
+                      )));
+                },
               ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),

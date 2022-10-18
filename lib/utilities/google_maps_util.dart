@@ -110,14 +110,14 @@ class GoogleMapsUtil {
     return LatLng(centralLatitude * 180 / pi, centralLongitude * 180 / pi);
   }
 
-  static Set<Circle> circleLoc (List<StopTimeModel> stopTimes){
+  static Set<Circle> circleLoc (List<StopTimeModel> stopTimes, double zoom){
     Set<Circle> toReturn = {};
     for (StopTimeModel stopTime in stopTimes){
       toReturn.add(
           Circle(
             circleId: CircleId(stopTime.stop!.name),
             center: stopTime.stop!.location,
-            radius: 150,
+            radius: 1500 / zoom,
             fillColor: Colors.white,
             strokeWidth: 1,
       ));
