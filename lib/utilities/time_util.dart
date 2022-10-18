@@ -10,4 +10,12 @@ class TimeUtil {
     final String formattedDateTime = formatDateTime(now);
     return formattedDateTime;
   }
+
+  static String getZeroPaddedDigit(int unit) {
+    if (unit < 10) {
+      return '0$unit';
+    } else {
+      return '$unit';
+    }
+  }
 }

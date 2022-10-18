@@ -15,6 +15,7 @@ class ApiConstants {
               : dotenv.get('BACKEND_API_URL')) +
           (isSample ? '/sample' : '');
   static String stopsEndpoint = '/stop';
+  static String filteredStopsEndpoint = '/stop/filter';
   static String tripsEndpoint = '/trip';
   static String landmarksEndpoint = '/landmark';
   static String currentStopId =
