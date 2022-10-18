@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/landmark_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/landmark_card.dart';
 
@@ -29,6 +28,7 @@ class _AroundMeState extends State<AroundMe> {
             InkWell(
               onTap: () {
                 index >= 3 ? index -= 3 : index = 0;
+                setState(() {});
               },
               child: const Icon(
                 Icons.keyboard_arrow_up_sharp,
@@ -60,6 +60,7 @@ class _AroundMeState extends State<AroundMe> {
                 index + 3 < landmarks.length - 3
                     ? index += 3
                     : index = landmarks.length - 3;
+                setState(() {});
               },
               child: const Icon(
                 Icons.keyboard_arrow_down_sharp,
