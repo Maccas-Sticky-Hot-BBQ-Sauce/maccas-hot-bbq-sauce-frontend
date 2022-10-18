@@ -110,6 +110,7 @@ class _RouteStopsState extends State<RouteStops> {
                   setState(() {
                     pressedStop = trip.stopTimes![i].stop!.name;
                   });
+                  Navigator.pop(context);
                   Navigator.push(
                       context, MaterialPageRoute(builder: (context) =>
                       TripScreen(
