@@ -5,13 +5,15 @@ import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
 import 'package:maccas_sticky_hot_bbq_sauce/models/shape_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/google_maps_util.dart';
 
+import '../../models/stop_time_model.dart';
+
 class GoogleMapDisplay extends StatelessWidget {
   final LatLng center;
   final int mapId;
   final String? markerId;
   final String? polylineId;
   final List<ShapeModel>? polylineShape;
-  final double? zoom;
+  final List<StopTimeModel>? stopTimes;
 
   const GoogleMapDisplay ({
     Key? key,
@@ -19,8 +21,8 @@ class GoogleMapDisplay extends StatelessWidget {
     this.markerId,
     this.polylineShape,
     this.polylineId,
-    this.zoom,
     required this.mapId,
+    this.stopTimes,
   }) : super(key: key);
   
 
@@ -39,8 +41,13 @@ class GoogleMapDisplay extends StatelessWidget {
                       (id) {},
                   widgetConfiguration:
                   MapWidgetConfiguration(
-                    initialCameraPosition: CameraPosition(
-                        target: center, zoom: (zoom != null) ? zoom! : 20.0),
+                    initialCameraPosition:
+                      CameraPosition(
+                        target: center,
+                        zoom: (polylineShape != null)
+                            ? GoogleMapsUtil.zoom(polylineShape!)
+                            : 20.0
+                    ),
                     textDirection: ui.TextDirection.ltr,
                   ),
                   mapObjects: MapObjects(
@@ -57,11 +64,12 @@ class GoogleMapDisplay extends StatelessWidget {
                             Polyline(
                               polylineId: PolylineId(polylineId!),
                               points: GoogleMapsUtil.polylinePoints(polylineShape!),
-                              width: 6,
-                              color: Colors.lightGreen,
+                              width: 5,
+                              color: Colors.blue,
                             )
                         }
                         : {},
+                      circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes!) : {},
                   ),
                   mapConfiguration: const MapConfiguration(
                     zoomControlsEnabled: false,
