@@ -36,12 +36,14 @@ class LandmarkCard extends StatelessWidget {
                             base64Decode(image!),
                             width: 210,
                             height: 210,
+                            fit: BoxFit.cover,
                           )
                         : const Image(
                             image:
                                 ExactAssetImage("assets/images/no-photo.jpg"),
                             height: 210,
                             width: 210,
+                            fit: BoxFit.cover,
                           ),
                   ),
                   Container(

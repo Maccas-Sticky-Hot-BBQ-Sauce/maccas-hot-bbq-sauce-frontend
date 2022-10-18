@@ -81,11 +81,17 @@ class _LandmarkState extends State<Landmark> {
                   height: 382,
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                   child: landmark.imgB64 != null
-                      ? Image.memory(base64Decode(landmark.imgB64!))
+                      ? Image.memory(
+                          base64Decode(landmark.imgB64!),
+                          height: 210,
+                          width: 210,
+                          fit: BoxFit.cover,
+                        )
                       : const Image(
                           image: ExactAssetImage("assets/images/no-photo.jpg"),
                           height: 210,
                           width: 210,
+                          fit: BoxFit.cover,
                         ),
                 ),
                 Container(

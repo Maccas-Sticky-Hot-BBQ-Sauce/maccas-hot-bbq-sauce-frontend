@@ -54,7 +54,6 @@ class _TimetableState extends State<Timetable> {
               InkWell(
                 onTap: () {
                   filterIndex == 0 ? null : filterIndex -= 1;
-                  print(index);
                   setState(() {});
                 },
                 child: const Icon(
@@ -67,11 +66,17 @@ class _TimetableState extends State<Timetable> {
                   routeFilterId = "";
                   setState(() {});
                 },
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFF1B4B87),
-                  onPrimary: const Color(0xFFFFE832),
-                  fixedSize: const Size(109, 74),
-                ),
+                style: routeFilterId == ""
+                    ? ElevatedButton.styleFrom(
+                        primary: const Color(0xFF1B4B87),
+                        onPrimary: const Color(0xFFFFE832),
+                        fixedSize: const Size(109, 74),
+                      )
+                    : ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                        fixedSize: const Size(109, 74),
+                        side: const BorderSide(color: Colors.black, width: 2)),
                 child: const Text(
                   'All',
                   style: TextStyle(
@@ -87,6 +92,7 @@ class _TimetableState extends State<Timetable> {
                     i++)
                   RouteButton(
                       text: stop.routes[stop.routes.keys.toList()[i]]!,
+                      active: routeFilterId == stop.routes.keys.toList()[i],
                       onPressed: () {
                         routeFilterId = stop.routes.keys.toList()[i];
                         generateFilteredList();
