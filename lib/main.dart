@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TripModel? trip;
   String displayState = 'TIMETABLE';
   List<LandmarkModel> landmarks = [];
+  Set<Marker>? markers;
 
   @override
   void initState() {
@@ -71,14 +73,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    markers = (currentStop != null) ? <Marker>{
+      Marker(
+          markerId: const MarkerId("1"),
+          position: currentStop!.location,
+      )
+    }
+    : {};
     return Scaffold(
         appBar: const AppBarStateful(),
         body: ListView(children: [
           if (currentStop != null) ...[
             GoogleMapDisplay(
-              center: currentStop!.location,
-              markerId: currentStop!.name,
-              mapId: 1,
+                center: currentStop!.location,
+                markers: markers,
             ),
             Container(
               margin: const EdgeInsets.all(30.0),
