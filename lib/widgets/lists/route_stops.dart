@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
@@ -26,6 +25,7 @@ class _RouteStopsState extends State<RouteStops> {
   int index = 0;
   int currentStopIndex = 0;
 
+  @override
   void initState() {
     super.initState();
     currentStopIndex = getIndex(widget.trip, widget.stopId);
