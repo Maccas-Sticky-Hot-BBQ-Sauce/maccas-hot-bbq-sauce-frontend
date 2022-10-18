@@ -59,6 +59,7 @@ class GoogleMapDisplay extends StatelessWidget {
                             )
                         }
                         : {},
+                      circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes!) : {},
                       polylines: (polylineShape != null) ?
                       <Polyline>{
                             Polyline(
@@ -69,7 +70,6 @@ class GoogleMapDisplay extends StatelessWidget {
                             )
                         }
                         : {},
-                      circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes!) : {},
                   ),
                   mapConfiguration: const MapConfiguration(
                     zoomControlsEnabled: false,
