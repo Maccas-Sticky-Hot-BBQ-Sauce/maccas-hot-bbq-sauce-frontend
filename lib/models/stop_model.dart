@@ -19,6 +19,7 @@ class StopModel {
   int locationType;
   String? platformCode;
   List<StopTimeModel> stopTimes;
+  Map<String, String> routes;
 
   StopModel({
     required this.id,
@@ -32,10 +33,12 @@ class StopModel {
     required this.locationType,
     required this.platformCode,
     required this.stopTimes,
+    required this.routes,
   });
 
   factory StopModel.fromJson(Map<String, dynamic> json) {
     List<StopTimeModel> validStopTimes;
+    Map<String, String> routes = {};
 
     if (json['stopTimes'] != null) {
       List<StopTimeModel> stopTimeModel = List<StopTimeModel>.from(
@@ -45,22 +48,28 @@ class StopModel {
       validStopTimes = List<StopTimeModel>.from(stopTimeModel
           .where((stopTime) => ValidateStopTimeUtil.valid(stopTime)));
       validStopTimes.sort((a, b) => a.departure.compareTo(b.departure));
+
+      validStopTimes.forEach((stopTime) {
+        routes[stopTime.trip!.route.routeId] = stopTime.trip!.route.shortName;
+      });
     } else {
       validStopTimes = [];
     }
 
     return StopModel(
-        id: json["id"],
-        stopId: int.parse(json["stopId"]),
-        stopCode: json["stopCode"],
-        name: json["name"],
-        description: json["description"],
-        location: LatLng(json["latitude"], json["longitude"]),
-        zoneId: json["zoneId"],
-        stopUrl: json["stopUrl"],
-        locationType: json["locationType"],
-        platformCode: json["platformCode"],
-        stopTimes: validStopTimes);
+      id: json["id"],
+      stopId: int.parse(json["stopId"]),
+      stopCode: json["stopCode"],
+      name: json["name"],
+      description: json["description"],
+      location: LatLng(json["latitude"], json["longitude"]),
+      zoneId: json["zoneId"],
+      stopUrl: json["stopUrl"],
+      locationType: json["locationType"],
+      platformCode: json["platformCode"],
+      stopTimes: validStopTimes,
+      routes: routes,
+    );
   }
 }
 
