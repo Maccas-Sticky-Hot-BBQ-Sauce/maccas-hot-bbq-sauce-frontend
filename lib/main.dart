@@ -5,17 +5,15 @@ import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar_stateful.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/around_me.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/timetable.dart';
-import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/services/api_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
 
 Future main() async {
   await dotenv.load(fileName: 'constants.env');
-  ApiService.getStopData(ApiConstants.currentStopId);
   runApp(const MyApp());
 }
 
@@ -45,7 +43,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late String _time;
   StopModel? currentStop;
   TripModel? trip;
   String displayState = 'TIMETABLE';
@@ -53,35 +50,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    _time = TimeUtil.formatDateTime(DateTime.now());
-    Timer.periodic(
-        const Duration(seconds: 1),
-        (Timer t) => setState(() {
-              _time = TimeUtil.getTime(_time);
-            }));
-    super.initState();
     _getData();
+    super.initState();
   }
 
   void _getData() async {
     currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
-    inspect(currentStop);
     landmarks =
         await ApiService.getLandmarksFromStop(ApiConstants.currentStopId);
+    inspect(currentStop);
     inspect(landmarks);
+    setState(() {});
   }
 
   void setDisplayState(String newState) {
-    displayState = newState;
+    setState(() {
+      displayState = newState;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarWidget(
-          time: _time,
-          appBar: AppBar(),
-        ),
+        appBar: const AppBarStateful(),
         body: ListView(children: [
           if (currentStop != null) ...[
             GoogleMapDisplay(

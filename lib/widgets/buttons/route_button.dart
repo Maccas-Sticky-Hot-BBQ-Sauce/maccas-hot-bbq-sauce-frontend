@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class RouteButton extends StatelessWidget {
   final String text;
   final GestureTapCallback onPressed;
-  const RouteButton({Key? key, required this.text, required this.onPressed}) : super(key: key);
+  const RouteButton({Key? key, required this.text, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class RouteButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           primary: Colors.white,
           onPrimary: Colors.black,
-          fixedSize: const Size(109, 74),
+          fixedSize: const Size(119, 74),
           side: const BorderSide(color: Colors.black, width: 2)),
       child: Text(
         text,
