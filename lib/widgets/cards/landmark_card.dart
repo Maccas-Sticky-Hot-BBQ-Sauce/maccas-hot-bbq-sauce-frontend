@@ -32,7 +32,11 @@ class LandmarkCard extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
                     child: image != null
-                        ? Image.memory(base64Decode(image!))
+                        ? Image.memory(
+                            base64Decode(image!),
+                            width: 210,
+                            height: 210,
+                          )
                         : const Image(
                             image:
                                 ExactAssetImage("assets/images/no-photo.jpg"),

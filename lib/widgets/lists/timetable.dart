@@ -82,7 +82,9 @@ class _TimetableState extends State<Timetable> {
                 ),
               ),
               ...[
-                for (int i = filterIndex; i < filterIndex + 4; i++)
+                for (int i = filterIndex;
+                    i < filterIndex + 4 && i < stop.routes.length;
+                    i++)
                   RouteButton(
                       text: stop.routes[stop.routes.keys.toList()[i]]!,
                       onPressed: () {
@@ -106,77 +108,76 @@ class _TimetableState extends State<Timetable> {
             ],
           ),
         ),
-        if (stop.stopTimes.length - 1 - index > 0) ...[
-          if ((stop.stopTimes.length - 1) - index > 5)
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      index == 0 ? null : index -= 1;
-                      setState(() {});
-                    },
-                    child: const Icon(
-                      Icons.keyboard_arrow_up_sharp,
-                      size: 100.0,
-                    ),
+        if (stop.stopTimes.length - index > 0) ...[
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    index == 0 ? null : index -= 1;
+                    setState(() {});
+                  },
+                  child: const Icon(
+                    Icons.keyboard_arrow_up_sharp,
+                    size: 100.0,
                   ),
-                  for (int i = index;
-                      i < index + 5 &&
-                          i <
-                              (routeFilterId == ""
-                                  ? stop.stopTimes.length
-                                  : filteredStopTimes.length);
-                      i++)
-                    BusCard(
-                      busNumber: routeFilterId == ""
-                          ? stop.stopTimes[i].trip!.route.shortName
-                          : filteredStopTimes[i].trip!.route.shortName,
-                      busStop: routeFilterId == ""
-                          ? stop.stopTimes[i].trip!.headsign
-                          : filteredStopTimes[i].trip!.headsign,
-                      routeColor: routeFilterId == ""
-                          ? stop.stopTimes[i].trip!.route.routeColor
-                          : filteredStopTimes[i].trip!.route.routeColor,
-                      platform:
-                          (stop.platformCode != null) ? stop.platformCode! : '',
-                      time: routeFilterId == ""
-                          ? stop.stopTimes[i].arrival
-                          : filteredStopTimes[i].arrival,
+                ),
+                for (int i = index;
+                    i < index + 5 &&
+                        i <
+                            (routeFilterId == ""
+                                ? stop.stopTimes.length
+                                : filteredStopTimes.length);
+                    i++)
+                  BusCard(
+                    busNumber: routeFilterId == ""
+                        ? stop.stopTimes[i].trip!.route.shortName
+                        : filteredStopTimes[i].trip!.route.shortName,
+                    busStop: routeFilterId == ""
+                        ? stop.stopTimes[i].trip!.headsign
+                        : filteredStopTimes[i].trip!.headsign,
+                    routeColor: routeFilterId == ""
+                        ? stop.stopTimes[i].trip!.route.routeColor
+                        : filteredStopTimes[i].trip!.route.routeColor,
+                    platform:
+                        (stop.platformCode != null) ? stop.platformCode! : '',
+                    time: routeFilterId == ""
+                        ? stop.stopTimes[i].arrival
+                        : filteredStopTimes[i].arrival,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TripScreen(
+                              tripId: stop.stopTimes[i].trip!.tripId,
+                              platform: stop.platformCode,
+                              stopTime: stop.stopTimes[i],
+                              stopId: stop.stopId,
+                            ),
+                          ));
+                    },
+                  ),
+                if ((stop.stopTimes.length - 1) - index > 5)
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TripScreen(
-                                tripId: stop.stopTimes[i].trip!.tripId,
-                                platform: stop.platformCode,
-                                stopTime: stop.stopTimes[i],
-                                stopId: stop.stopId,
-                              ),
-                            ));
+                        index + 5 > stop.stopTimes.length - 1
+                            ? null
+                            : index += 1;
+                        setState(() {});
                       },
-                    ),
-                  if ((stop.stopTimes.length - 1) - index > 5)
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: InkWell(
-                        onTap: () {
-                          index + 5 > stop.stopTimes.length - 1
-                              ? null
-                              : index += 1;
-                          setState(() {});
-                        },
-                        child: const Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          size: 100.0,
-                        ),
+                      child: const Icon(
+                        Icons.keyboard_arrow_down_sharp,
+                        size: 100.0,
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
+          ),
         ] else
           const Text('tai'),
       ],
