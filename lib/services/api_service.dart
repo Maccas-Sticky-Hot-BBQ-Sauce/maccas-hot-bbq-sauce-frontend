@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
 
@@ -37,6 +38,23 @@ class ApiService {
     } catch (e) {
       log(e.toString());
       return null;
+    }
+  }
+
+  static Future<List<LandmarkModel>> getLandmarksFromStop(String stopId) async {
+    try {
+      Uri url = Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.landmarksEndpoint}?stopId=$stopId');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<LandmarkModel> model = landmarkModelFromJson(response.body);
+        return model;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      log(e.toString());
+      return [];
     }
   }
 }

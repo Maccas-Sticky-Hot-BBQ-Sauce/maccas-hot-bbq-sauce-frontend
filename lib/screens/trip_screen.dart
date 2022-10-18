@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/utilities/google_maps_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/route_stops.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
 
+import '../models/stop_time_model.dart';
 import '../models/trip_model.dart';
 import '../services/api_service.dart';
 import '../widgets/appbar/appbar.dart';
@@ -23,7 +25,7 @@ class TripScreen extends StatefulWidget {
   final String tripId;
   final String? platform;
   final StopTimeModel stopTime;
-  final String stopId;
+  final int stopId;
 
   @override
   State<StatefulWidget> createState() => TripScreenState();
@@ -62,7 +64,7 @@ class TripScreenState extends State<TripScreen> {
   Widget build(BuildContext context) {
     StopTimeModel stopTime = widget.stopTime;
     String? platform = widget.platform;
-    String stopId = widget.stopId;
+    int stopId = widget.stopId;
     return Scaffold(
         appBar: AppBarWidget(
           time: _time,
@@ -71,8 +73,11 @@ class TripScreenState extends State<TripScreen> {
         body: ListView(children: [
           if (trip != null) ...[
             GoogleMapDisplay(
-              center: trip!.stopTimes![0].stop!.location,
-              zoom: 10.0,
+              center: GoogleMapsUtil.getCenter(trip!.shapes!),
+              polylineId: trip!.route.routeId,
+              polylineShape: trip!.shapes,
+              mapId: GoogleMapsUtil.parseRoute(trip!.route.shortName),
+              stopTimes: trip!.stopTimes,
             ),
             RouteStops(
               trip: trip!,
