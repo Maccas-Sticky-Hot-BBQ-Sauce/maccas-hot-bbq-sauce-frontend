@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/screens/trip_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/stop_card.dart';
 
@@ -11,10 +13,10 @@ class RouteStops extends StatefulWidget {
   final int stopId;
   const RouteStops(
       {Key? key,
-      required this.trip,
-      required this.stopTime,
-      this.platform,
-      required this.stopId})
+        required this.trip,
+        required this.stopTime,
+        this.platform,
+        required this.stopId})
       : super(key: key);
 
   @override
@@ -108,6 +110,19 @@ class _RouteStopsState extends State<RouteStops> {
                   setState(() {
                     pressedStop = trip.stopTimes![i].stop!.name;
                   });
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) =>
+                      TripScreen(
+                          tripId: trip.tripId,
+                          stopTime: stopTime,
+                          stopId: stopTime.stopId,
+                          markers: <Marker>{
+                            Marker(
+                              markerId: MarkerId(trip.stopTimes![i].stop!.name),
+                              position: trip.stopTimes![i].stop!.location
+                            )
+                          },
+                      )));
                 },
               ),
             Container(

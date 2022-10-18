@@ -28,7 +28,6 @@ class LandmarkScreenState extends State<LandmarkScreen> {
         children: [
           GoogleMapDisplay(
             center: center,
-            mapId: 10000,
           ),
           Landmark(
             landmark: landmark,
