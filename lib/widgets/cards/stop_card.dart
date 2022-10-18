@@ -5,12 +5,16 @@ class StopCard extends StatefulWidget {
   final String stopName;
   final DateTime stoppingTime;
   final int color;
+  final GestureTapCallback onTap;
+  final String pressedStop;
 
   const StopCard(
       {Key? key,
-      required this.stopName,
-      required this.stoppingTime,
-      required this.color})
+        required this.stopName,
+        required this.stoppingTime,
+        required this.color,
+        required this.onTap,
+        required this.pressedStop})
       : super(key: key);
 
   @override
@@ -18,22 +22,20 @@ class StopCard extends StatefulWidget {
 }
 
 class StopCardState extends State<StopCard>{
-  bool pressed = false;
 
   @override
   Widget build(BuildContext context) {
     String stopName = widget.stopName;
     DateTime stoppingTime = widget.stoppingTime;
-    Color color = (!pressed) ? Color(widget.color) : const Color(0xFF2464B4);
+    String pressedStop = widget.pressedStop;
+    GestureTapCallback onTap = widget.onTap;
+    Color color = (pressedStop != stopName) ? Color(widget.color) : const Color(0xFF2464B4);
+
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 70),
       child:
       GestureDetector(
-        onTap: () {
-          setState(() {
-            pressed = !pressed;
-          });
-        },
+        onTap: onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

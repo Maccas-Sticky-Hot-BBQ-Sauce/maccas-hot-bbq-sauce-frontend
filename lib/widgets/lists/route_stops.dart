@@ -24,6 +24,7 @@ class RouteStops extends StatefulWidget {
 class _RouteStopsState extends State<RouteStops> {
   int index = 0;
   int currentStopIndex = 0;
+  String pressedStop = "";
 
   @override
   void initState() {
@@ -102,6 +103,12 @@ class _RouteStopsState extends State<RouteStops> {
                 stopName: trip.stopTimes![i].stop!.name,
                 stoppingTime: trip.stopTimes![i].arrival,
                 color: (i < currentStopIndex) ? 0xFF8C8C8C : 0xFF222222,
+                pressedStop: pressedStop,
+                onTap: () {
+                  setState(() {
+                    pressedStop = trip.stopTimes![i].stop!.name;
+                  });
+                },
               ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),

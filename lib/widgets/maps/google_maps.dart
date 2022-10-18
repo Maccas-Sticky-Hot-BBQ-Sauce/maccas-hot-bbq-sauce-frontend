@@ -28,6 +28,7 @@ class GoogleMapDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double zoom = (polylineShape != null) ? GoogleMapsUtil.zoom(polylineShape!) : 20.0;
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 20, 0, 40),
       child: AspectRatio(
@@ -44,9 +45,7 @@ class GoogleMapDisplay extends StatelessWidget {
                     initialCameraPosition:
                       CameraPosition(
                         target: center,
-                        zoom: (polylineShape != null)
-                            ? GoogleMapsUtil.zoom(polylineShape!)
-                            : 20.0
+                        zoom: zoom,
                     ),
                     textDirection: ui.TextDirection.ltr,
                   ),
@@ -59,7 +58,7 @@ class GoogleMapDisplay extends StatelessWidget {
                             )
                         }
                         : {},
-                      circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes!) : {},
+                      circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes!, zoom) : {},
                       polylines: (polylineShape != null) ?
                       <Polyline>{
                             Polyline(
