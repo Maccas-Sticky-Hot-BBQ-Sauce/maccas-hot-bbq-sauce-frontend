@@ -1,16 +1,25 @@
 import 'dart:developer';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 
 class ApiService {
   static Future<StopModel?> getStopData(String stopId) async {
+    DateTime now = DateTime.now();
+
+    String fromTime =
+        '${TimeUtil.getZeroPaddedDigit(now.hour)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
+    String toTime =
+        '${TimeUtil.getZeroPaddedDigit(now.hour + 5)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
+
     try {
       Uri url = Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.stopsEndpoint}?id=$stopId');
+          '${ApiConstants.baseUrl}${ApiConstants.filteredStopsEndpoint}?id=$stopId&fromTime=$fromTime&toTime=$toTime');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         StopModel model = stopModelFromJson(response.body);
