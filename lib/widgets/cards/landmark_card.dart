@@ -19,39 +19,42 @@ class LandmarkCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 1016,
         height: 210,
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
-              child: const Image(
-                image: ExactAssetImage("assets/images/no-photo.jpg"),
-                height: 210,
-                width: 210,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
+                    child: const Image(
+                      image: ExactAssetImage("assets/images/no-photo.jpg"),
+                      height: 210,
+                      width: 210,
+                    ),
+                  ),
+                  Container(
+                    width: 643,
+                    child: Text(
+                      name,
+                      style: const TextStyle(
+                          fontFamily: 'helvetica-neue',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 36),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 192, 0),
-              child: Text(
-                name,
-                style: const TextStyle(
-                    fontFamily: 'helvetica-neue',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 36),
-              ),
+            Text(
+              '$distance m',
+              style: const TextStyle(
+                  fontFamily: 'helvetica-neue',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 32),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Text(
-                '$distance m',
-                style: const TextStyle(
-                    fontFamily: 'helvetica-neue',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 32),
-              ),
-            )
           ],
         ),
       ),

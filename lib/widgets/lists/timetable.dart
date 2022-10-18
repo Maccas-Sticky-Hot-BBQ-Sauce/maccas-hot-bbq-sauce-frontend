@@ -96,9 +96,10 @@ class _TimetableState extends State<Timetable> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
+                InkWell(
                   onTap: () {
                     index >= 5 ? index -= 5 : index = 0;
+                    print(index);
                   },
                   child: const Icon(
                     Icons.keyboard_arrow_up_sharp,
@@ -130,9 +131,10 @@ class _TimetableState extends State<Timetable> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
+                InkWell(
                   onTap: () {
                     index += 5;
+                    print(index);
                   },
                   child: const Icon(
                     Icons.keyboard_arrow_down_sharp,

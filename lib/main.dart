@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Row(children: <Widget>[
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         setDisplayState('TIMETABLE');
                       },
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                       ),
                     ),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         setDisplayState('AROUND_ME');
                       },
@@ -169,7 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ]),
                   displayState == 'TIMETABLE'
                       ? Timetable(stop: currentStop!)
-                      : AroundMe(landmarks: landmarks),
+                      : AroundMe(
+                          landmarks: landmarks,
+                          center: currentStop!.location,
+                        ),
                 ],
               ),
             ),
