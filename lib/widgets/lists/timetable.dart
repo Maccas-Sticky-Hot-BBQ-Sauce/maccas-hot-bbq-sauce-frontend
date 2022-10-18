@@ -125,9 +125,12 @@ class _TimetableState extends State<Timetable> {
                     index == 0 ? null : index -= 1;
                     setState(() {});
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.keyboard_arrow_up_sharp,
                     size: 100.0,
+                    color: index == 0
+                        ? const Color(0xFF8C8C8C)
+                        : const Color(0xFF222222),
                   ),
                 ),
                 for (int i = index;
@@ -165,27 +168,35 @@ class _TimetableState extends State<Timetable> {
                           ));
                     },
                   ),
-                if ((stop.stopTimes.length - 1) - index > 5)
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () {
-                        index + 5 > stop.stopTimes.length - 1
-                            ? null
-                            : index += 1;
-                        setState(() {});
-                      },
-                      child: const Icon(
-                        Icons.keyboard_arrow_down_sharp,
-                        size: 100.0,
-                      ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: InkWell(
+                    onTap: () {
+                      index + 5 > stop.stopTimes.length - 1 ? null : index += 1;
+                      setState(() {});
+                    },
+                    child: Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      size: 100.0,
+                      color: index + 5 > stop.stopTimes.length - 1
+                          ? const Color(0xFF8C8C8C)
+                          : const Color(0xFF222222),
                     ),
                   ),
+                ),
               ],
             ),
           ),
         ] else
-          const Text('tai'),
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: const Text('Sorry, no more buses for today!',
+                style: TextStyle(
+                  fontFamily: 'helvetica-neue',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 36,
+                )),
+          ),
       ],
     );
   }
