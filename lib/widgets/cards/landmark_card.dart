@@ -4,15 +4,20 @@ class LandmarkCard extends StatelessWidget {
   final String name;
   final double distance;
   final String? image;
+  final GestureTapCallback onTap;
 
   const LandmarkCard(
-      {Key? key, required this.name, required this.distance, this.image})
+      {Key? key,
+      required this.name,
+      required this.distance,
+      this.image,
+      required this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: 1016,
         height: 210,

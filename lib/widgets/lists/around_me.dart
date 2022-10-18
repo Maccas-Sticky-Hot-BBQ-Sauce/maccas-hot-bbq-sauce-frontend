@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/screens/landmark_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/landmark_card.dart';
 
 class AroundMe extends StatefulWidget {
@@ -33,9 +34,17 @@ class _AroundMeState extends State<AroundMe> {
           ],
         ),
         for (int i = index; i < index + 3; i++)
-          const LandmarkCard(
+          LandmarkCard(
             name: 'UQ Biological Science Library',
             distance: 300,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LandmarkScreen(
+                            landmark: landmarks[i],
+                          )));
+            },
           ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

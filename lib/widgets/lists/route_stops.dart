@@ -26,6 +26,7 @@ class _RouteStopsState extends State<RouteStops> {
   int index = 0;
   int currentStopIndex = 0;
 
+  @override
   void initState() {
     super.initState();
     currentStopIndex = getIndex(widget.trip, widget.stopId);
