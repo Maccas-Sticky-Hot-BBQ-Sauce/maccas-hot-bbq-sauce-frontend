@@ -16,6 +16,7 @@ class Timetable extends StatefulWidget {
 
 class _TimetableState extends State<Timetable> {
   int index = 0;
+  String routeFilterId = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _TimetableState extends State<Timetable> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  return;
+                  routeFilterId = "";
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFF1B4B87),
@@ -60,30 +61,12 @@ class _TimetableState extends State<Timetable> {
                   ),
                 ),
               ),
-              RouteButton(
-                text: "402",
-                onPressed: () {
-                  return;
-                },
-              ),
-              RouteButton(
-                text: "411",
-                onPressed: () {
-                  return;
-                },
-              ),
-              RouteButton(
-                text: "412",
-                onPressed: () {
-                  return;
-                },
-              ),
-              RouteButton(
-                text: "428",
-                onPressed: () {
-                  return;
-                },
-              ),
+              ...[
+                for (String routeId in stop.routes.keys)
+                  RouteButton(
+                      text: stop.routes[routeId]!,
+                      onPressed: () => routeFilterId = routeId)
+              ],
               const Icon(
                 Icons.keyboard_arrow_right_sharp,
                 size: 100.0,
@@ -106,41 +89,49 @@ class _TimetableState extends State<Timetable> {
                     size: 100.0,
                   ),
                 ),
-              ],
-            ),
-          for (int i = index; i < index + 5 && i < stop.stopTimes.length; i++)
-            BusCard(
-              busNumber: stop.stopTimes[i].trip!.route.shortName,
-              busStop: stop.stopTimes[i].trip!.headsign,
-              routeColor: stop.stopTimes[i].trip!.route.routeColor,
-              platform: (stop.platformCode != null) ? stop.platformCode! : '',
-              time: stop.stopTimes[i].arrival,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TripScreen(
-                          tripId: stop.stopTimes[i].trip!.tripId,
-                          platform: stop.platformCode,
-                          stopTime: stop.stopTimes[i],
-                          stopId: stop.id),
-                    ));
-              },
-            ),
-          if ((stop.stopTimes.length - 1) - index > 5)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    index += 5;
-                    print(index);
-                  },
-                  child: const Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    size: 100.0,
-                  ),
-                )
+                for (int i = index;
+                    i < index + 5 && i < stop.stopTimes.length;
+                    i++)
+                  if (routeFilterId == "" ||
+                      routeFilterId == stop.stopTimes[i].trip!.route.routeId)
+                    BusCard(
+                      busNumber: stop.stopTimes[i].trip!.route.shortName,
+                      busStop: stop.stopTimes[i].trip!.headsign,
+                      routeColor: stop.stopTimes[i].trip!.route.routeColor,
+                      platform:
+                          (stop.platformCode != null) ? stop.platformCode! : '',
+                      time: stop.stopTimes[i].arrival,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TripScreen(
+                                tripId: stop.stopTimes[i].trip!.tripId,
+                                platform: stop.platformCode,
+                                stopTime: stop.stopTimes[i],
+                                stopId: stop.id,
+                              ),
+                            ));
+                      },
+                    ),
+                if ((stop.stopTimes.length - 1) - index > 5)
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            index += 5;
+                          },
+                          child: const Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                            size: 100.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
               ],
             ),
         ] else

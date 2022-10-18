@@ -85,7 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
         body: ListView(children: [
           if (currentStop != null) ...[
             GoogleMapDisplay(
-                center: currentStop!.location, markerId: currentStop!.name),
+              center: currentStop!.location,
+              markerId: currentStop!.name,
+              mapId: 1,
+            ),
             Container(
               margin: const EdgeInsets.all(30.0),
               child: Column(
