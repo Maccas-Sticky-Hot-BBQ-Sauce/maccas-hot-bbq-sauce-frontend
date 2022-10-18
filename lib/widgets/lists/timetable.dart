@@ -62,10 +62,11 @@ class _TimetableState extends State<Timetable> {
                 ),
               ),
               ...[
-                for (String routeId in stop.routes.keys)
+                for (int i = 0; i < 1; i++)
                   RouteButton(
-                      text: stop.routes[routeId]!,
-                      onPressed: () => routeFilterId = routeId)
+                      text: stop.routes[stop.routes.keys.toList()[i]]!,
+                      onPressed: () =>
+                          routeFilterId = stop.routes.keys.toList()[i])
               ],
               const Icon(
                 Icons.keyboard_arrow_right_sharp,
@@ -76,63 +77,67 @@ class _TimetableState extends State<Timetable> {
         ),
         if (stop.stopTimes.length - 1 - index > 0) ...[
           if ((stop.stopTimes.length - 1) - index > 5)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    index >= 5 ? index -= 5 : index = 0;
-                    print(index);
-                  },
-                  child: const Icon(
-                    Icons.keyboard_arrow_up_sharp,
-                    size: 100.0,
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      index >= 5 ? index -= 5 : index = 0;
+                      print(index);
+                    },
+                    child: const Icon(
+                      Icons.keyboard_arrow_up_sharp,
+                      size: 100.0,
+                    ),
                   ),
-                ),
-                for (int i = index;
-                    i < index + 5 && i < stop.stopTimes.length;
-                    i++)
-                  if (routeFilterId == "" ||
-                      routeFilterId == stop.stopTimes[i].trip!.route.routeId)
-                    BusCard(
-                      busNumber: stop.stopTimes[i].trip!.route.shortName,
-                      busStop: stop.stopTimes[i].trip!.headsign,
-                      routeColor: stop.stopTimes[i].trip!.route.routeColor,
-                      platform:
-                          (stop.platformCode != null) ? stop.platformCode! : '',
-                      time: stop.stopTimes[i].arrival,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TripScreen(
-                                tripId: stop.stopTimes[i].trip!.tripId,
-                                platform: stop.platformCode,
-                                stopTime: stop.stopTimes[i],
-                                stopId: stop.id,
-                              ),
-                            ));
-                      },
-                    ),
-                if ((stop.stopTimes.length - 1) - index > 5)
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            index += 5;
-                          },
-                          child: const Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                            size: 100.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-              ],
+                  for (int i = index;
+                      i < index + 5 && i < stop.stopTimes.length;
+                      i++)
+                    if (routeFilterId == "" ||
+                        routeFilterId == stop.stopTimes[i].trip!.route.routeId)
+                      BusCard(
+                        busNumber: stop.stopTimes[i].trip!.route.shortName,
+                        busStop: stop.stopTimes[i].trip!.headsign,
+                        routeColor: stop.stopTimes[i].trip!.route.routeColor,
+                        platform: (stop.platformCode != null)
+                            ? stop.platformCode!
+                            : '',
+                        time: stop.stopTimes[i].arrival,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TripScreen(
+                                  tripId: stop.stopTimes[i].trip!.tripId,
+                                  platform: stop.platformCode,
+                                  stopTime: stop.stopTimes[i],
+                                  stopId: stop.id,
+                                ),
+                              ));
+                        },
+                      ),
+                  if ((stop.stopTimes.length - 1) - index > 5)
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              index += 5;
+                            },
+                            child: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                              size: 100.0,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                ],
+              ),
             ),
         ] else
           const Text('tai')
