@@ -15,11 +15,16 @@ import 'package:maccas_sticky_hot_bbq_sauce/widgets/maps/google_maps.dart';
 
 Future main() async {
   await dotenv.load(fileName: 'constants.env');
-  runApp(const MyApp());
+
+  String? stopId = Uri.base.queryParameters['stopId'];
+
+  runApp(MyApp(stopId: stopId));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.stopId}) : super(key: key);
+
+  final String? stopId;
 
   // This widget is the root of your application.
   @override
@@ -29,15 +34,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'QLD Bus Stop Explorer'),
+      home: MyHomePage(title: 'QLD Bus Stop Explorer', stopId: stopId),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.stopId})
+      : super(key: key);
 
   final String title;
+  final String? stopId;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -57,9 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _getData() async {
-    currentStop = (await ApiService.getStopData(ApiConstants.currentStopId))!;
-    landmarks =
-        await ApiService.getLandmarksFromStop(ApiConstants.currentStopId);
+    currentStop = (await ApiService.getStopData(
+        widget.stopId ?? ApiConstants.currentStopId))!;
+    landmarks = await ApiService.getLandmarksFromStop(
+        widget.stopId ?? ApiConstants.currentStopId);
     inspect(currentStop);
     inspect(landmarks);
     setState(() {});
@@ -73,20 +81,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    markers = (currentStop != null) ? <Marker>{
-      Marker(
-          markerId: const MarkerId("1"),
-          position: currentStop!.location,
-      )
-    }
-    : {};
+    markers = (currentStop != null)
+        ? <Marker>{
+            Marker(
+              markerId: const MarkerId("1"),
+              position: currentStop!.location,
+            )
+          }
+        : {};
     return Scaffold(
         appBar: const AppBarStateful(),
         body: ListView(children: [
           if (currentStop != null) ...[
             GoogleMapDisplay(
-                center: currentStop!.location,
-                markers: markers,
+              center: currentStop!.location,
+              markers: markers,
             ),
             Container(
               margin: const EdgeInsets.all(30.0),
