@@ -13,7 +13,7 @@ class GoogleMapDisplay extends StatefulWidget {
   final List<StopTimeModel>? stopTimes;
   final double? zoomLevel;
 
-  const GoogleMapDisplay ({
+  const GoogleMapDisplay({
     Key? key,
     required this.center,
     this.markers,
@@ -27,7 +27,7 @@ class GoogleMapDisplay extends StatefulWidget {
   State<StatefulWidget> createState() => GoogleMapDisplayState();
 }
 
-class GoogleMapDisplayState extends State<GoogleMapDisplay>{
+class GoogleMapDisplayState extends State<GoogleMapDisplay> {
   late GoogleMapController mapController;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -42,7 +42,8 @@ class GoogleMapDisplayState extends State<GoogleMapDisplay>{
     List<ShapeModel>? polylineShape = widget.polylineShape;
     List<StopTimeModel>? stopTimes = widget.stopTimes;
     double? zoomLevel = widget.zoomLevel;
-    double zoom = (polylineShape != null) ? GoogleMapsUtil.zoom(polylineShape) : 20.0;
+    double zoom =
+        (polylineShape != null) ? GoogleMapsUtil.zoom(polylineShape) : 18.0;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 20, 0, 40),
@@ -53,18 +54,23 @@ class GoogleMapDisplayState extends State<GoogleMapDisplay>{
             Expanded(
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(target: center, zoom: (zoomLevel != null) ? zoomLevel : zoom,),
+                initialCameraPosition: CameraPosition(
+                  target: center,
+                  zoom: (zoomLevel != null) ? zoomLevel : zoom,
+                ),
                 markers: (markers != null) ? markers : {},
-                circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes, zoom) : {},
-                polylines: (polylineShape != null) ?
-                <Polyline>{
-                  Polyline(
-                    polylineId: PolylineId(polylineId!),
-                    points: GoogleMapsUtil.polylinePoints(polylineShape),
-                    width: 5,
-                    color: Colors.blue,
-                  )
-                }
+                circles: (stopTimes != null)
+                    ? GoogleMapsUtil.circleLoc(stopTimes, zoom)
+                    : {},
+                polylines: (polylineShape != null)
+                    ? <Polyline>{
+                        Polyline(
+                          polylineId: PolylineId(polylineId!),
+                          points: GoogleMapsUtil.polylinePoints(polylineShape),
+                          width: 5,
+                          color: Colors.blue,
+                        )
+                      }
                     : {},
                 zoomControlsEnabled: false,
                 zoomGesturesEnabled: false,
@@ -75,6 +81,4 @@ class GoogleMapDisplayState extends State<GoogleMapDisplay>{
       ),
     );
   }
-
-
 }
