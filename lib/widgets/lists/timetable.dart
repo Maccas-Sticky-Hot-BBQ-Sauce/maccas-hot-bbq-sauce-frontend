@@ -46,75 +46,76 @@ class _TimetableState extends State<Timetable> {
 
     return Column(
       children: <Widget>[
-        Container(
-          margin: const EdgeInsets.fromLTRB(0, 40, 0, 60),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              InkWell(
-                onTap: () {
-                  filterIndex == 0 ? null : filterIndex -= 1;
-                  setState(() {});
-                },
-                child: const Icon(
-                  Icons.keyboard_arrow_left_sharp,
-                  size: 100.0,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  routeFilterId = "";
-                  setState(() {});
-                },
-                style: routeFilterId == ""
-                    ? ElevatedButton.styleFrom(
-                        primary: const Color(0xFF1B4B87),
-                        onPrimary: const Color(0xFFFFE832),
-                        fixedSize: const Size(109, 74),
-                      )
-                    : ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        fixedSize: const Size(109, 74),
-                        side: const BorderSide(color: Colors.black, width: 2)),
-                child: const Text(
-                  'All',
-                  style: TextStyle(
-                    fontFamily: 'helvetica-neue',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 36,
+        if (stop.stopTimes.length - index > 0) ...[
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 40, 0, 60),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    filterIndex == 0 ? null : filterIndex -= 1;
+                    setState(() {});
+                  },
+                  child: const Icon(
+                    Icons.keyboard_arrow_left_sharp,
+                    size: 100.0,
                   ),
                 ),
-              ),
-              ...[
-                for (int i = filterIndex;
-                    i < filterIndex + 4 && i < stop.routes.length;
-                    i++)
-                  RouteButton(
-                      text: stop.routes[stop.routes.keys.toList()[i]]!,
-                      active: routeFilterId == stop.routes.keys.toList()[i],
-                      onPressed: () {
-                        routeFilterId = stop.routes.keys.toList()[i];
-                        generateFilteredList();
-                        setState(() {});
-                      })
-              ],
-              InkWell(
-                onTap: () {
-                  filterIndex + 4 > stop.routes.length - 1
-                      ? null
-                      : filterIndex += 1;
-                  setState(() {});
-                },
-                child: const Icon(
-                  Icons.keyboard_arrow_right_sharp,
-                  size: 100.0,
+                ElevatedButton(
+                  onPressed: () {
+                    routeFilterId = "";
+                    setState(() {});
+                  },
+                  style: routeFilterId == ""
+                      ? ElevatedButton.styleFrom(
+                          primary: const Color(0xFF1B4B87),
+                          onPrimary: const Color(0xFFFFE832),
+                          fixedSize: const Size(109, 74),
+                        )
+                      : ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          fixedSize: const Size(109, 74),
+                          side:
+                              const BorderSide(color: Colors.black, width: 2)),
+                  child: const Text(
+                    'All',
+                    style: TextStyle(
+                      fontFamily: 'helvetica-neue',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 36,
+                    ),
+                  ),
                 ),
-              )
-            ],
+                ...[
+                  for (int i = filterIndex;
+                      i < filterIndex + 4 && i < stop.routes.length;
+                      i++)
+                    RouteButton(
+                        text: stop.routes[stop.routes.keys.toList()[i]]!,
+                        active: routeFilterId == stop.routes.keys.toList()[i],
+                        onPressed: () {
+                          routeFilterId = stop.routes.keys.toList()[i];
+                          generateFilteredList();
+                          setState(() {});
+                        })
+                ],
+                InkWell(
+                  onTap: () {
+                    filterIndex + 4 > stop.routes.length - 1
+                        ? null
+                        : filterIndex += 1;
+                    setState(() {});
+                  },
+                  child: const Icon(
+                    Icons.keyboard_arrow_right_sharp,
+                    size: 100.0,
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        if (stop.stopTimes.length - index > 0) ...[
           Container(
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Column(
