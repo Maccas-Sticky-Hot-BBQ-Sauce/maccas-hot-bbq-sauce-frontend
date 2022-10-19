@@ -96,11 +96,14 @@ class _LandmarkState extends State<Landmark> {
                 ),
                 Container(
                   width: 1016,
-                  height: 270,
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
-                  child: Text(landmark.description != null
-                      ? landmark.description!
-                      : ''),
+                  child: Text(
+                    landmark.description != null ? landmark.description! : '',
+                    style: const TextStyle(
+                        fontFamily: 'helvetica-neue',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 36),
+                  ),
                 ),
                 if (landmark.url != null)
                   Container(

@@ -18,6 +18,13 @@ class _AppBarStatefulState extends State<AppBarStateful> {
   late String _time;
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     _time = TimeUtil.formatDateTime(DateTime.now());
     Timer.periodic(
