@@ -24,7 +24,11 @@ class AroundMeScreenState extends State<AroundMeScreen> {
   void initState(){
     super.initState();
     for (LandmarkModel landmark in widget.landmarks){
-      landmarkMarkers.add(Marker(markerId: MarkerId(landmark.name), position: landmark.location));
+      landmarkMarkers.add(Marker(
+          markerId: MarkerId(landmark.name),
+          position: landmark.location,
+          infoWindow: InfoWindow(title: landmark.name),
+      ));
     }
     landmarkMarkers.add(Marker(
         markerId: const MarkerId("You are here"),
