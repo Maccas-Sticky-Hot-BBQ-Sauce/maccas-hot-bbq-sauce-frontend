@@ -57,6 +57,7 @@ class _RouteStopsState extends State<RouteStops> {
                     child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
+                          setState(() {});
                         },
                         child: const Icon(
                           Icons.arrow_back_rounded,
@@ -87,7 +88,8 @@ class _RouteStopsState extends State<RouteStops> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      index < 5 ? index = 0 : index -= 5;
+                      index == 0 ? null : index -= 1;
+                      setState(() {});
                     },
                     child: Icon(
                       Icons.keyboard_arrow_up_sharp,
@@ -135,9 +137,10 @@ class _RouteStopsState extends State<RouteStops> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      index + 5 > trip.stopTimes!.length - 5
-                          ? index = trip.stopTimes!.length - 5
-                          : index += 5;
+                      index + 5 > trip.stopTimes!.length - 1
+                          ? null
+                          : index += 1;
+                      setState(() {});
                     },
                     child: Icon(
                       Icons.keyboard_arrow_down_sharp,
