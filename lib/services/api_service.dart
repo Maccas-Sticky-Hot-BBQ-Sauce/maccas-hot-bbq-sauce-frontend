@@ -27,7 +27,7 @@ class ApiService {
         var response = await http.get(url);
         if (response.statusCode == 200) {
           StopModel model = stopModelFromJson(response.body);
-          if (model.stopTimes.length > 5 || hour == 32) return model;
+          if (model.stopTimes.length > 15 || hour == 32) return model;
         } else {
           return null;
         }
