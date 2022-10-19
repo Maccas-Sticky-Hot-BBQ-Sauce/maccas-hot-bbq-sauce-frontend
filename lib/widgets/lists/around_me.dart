@@ -16,6 +16,14 @@ class AroundMe extends StatefulWidget {
 
 class _AroundMeState extends State<AroundMe> {
   int index = 0;
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<LandmarkModel> landmarks = widget.landmarks;
@@ -44,6 +52,7 @@ class _AroundMeState extends State<AroundMe> {
               distance: landmarks[i].distance,
               image: landmarks[i].imgB64,
               onTap: () {
+                setState(() {});
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -76,12 +85,13 @@ class _AroundMeState extends State<AroundMe> {
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-                child: const Text('Sorry, no more buses for today!',
-                    style: TextStyle(
-                      fontFamily: 'helvetica-neue',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36,
-                    )),
+                child:
+                    const Text('Sorry, there are no landmarks near this area!',
+                        style: TextStyle(
+                          fontFamily: 'helvetica-neue',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 36,
+                        )),
               ),
             ],
           )
