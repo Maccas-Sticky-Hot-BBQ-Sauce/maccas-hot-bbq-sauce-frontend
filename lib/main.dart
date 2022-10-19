@@ -87,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Timer.periodic(const Duration(minutes: 2), (timer) async {
+      tripUpdates = await ApiService.getTripUpdatesFromStopTimes(
+          currentStop!.stopTimes.map((stopTime) => stopTime.id).toList());
+      setState(() {});
+    });
+
     markers = (currentStop != null)
         ? <Marker>{
             Marker(
