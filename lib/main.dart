@@ -6,6 +6,7 @@ import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/trip_update_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar_stateful.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/around_me.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/timetable.dart';
@@ -53,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   StopModel? currentStop;
   TripModel? trip;
+  Map<String, TripUpdateModel> tripUpdates = {};
   String displayState = 'TIMETABLE';
   List<LandmarkModel> landmarks = [];
   Set<Marker>? markers;
@@ -68,8 +70,12 @@ class _MyHomePageState extends State<MyHomePage> {
         widget.stopId ?? ApiConstants.currentStopId))!;
     landmarks = await ApiService.getLandmarksFromStop(
         widget.stopId ?? ApiConstants.currentStopId);
+    tripUpdates = await ApiService.getTripUpdatesFromStopTimes(
+        currentStop!.stopTimes.map((stopTime) => stopTime.id).toList());
+
     inspect(currentStop);
     inspect(landmarks);
+    inspect(tripUpdates);
     setState(() {});
   }
 
@@ -179,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ]),
                   displayState == 'TIMETABLE'
-                      ? Timetable(stop: currentStop!)
+                      ? Timetable(stop: currentStop!, tripUpdates: tripUpdates)
                       : AroundMe(
                           landmarks: landmarks,
                           center: currentStop!.location,

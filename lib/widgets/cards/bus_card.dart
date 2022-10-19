@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/trip_update_model.dart';
 
 class BusCard extends StatelessWidget {
   final String busNumber;
@@ -8,6 +9,9 @@ class BusCard extends StatelessWidget {
   final String platform;
   final DateTime time;
   final GestureTapCallback onTap;
+  final bool isCancelled;
+  final DateTime? delayedTime;
+  final int? delay;
 
   const BusCard(
       {Key? key,
@@ -16,14 +20,18 @@ class BusCard extends StatelessWidget {
       required this.routeColor,
       required this.platform,
       required this.time,
-      required this.onTap})
+      required this.onTap,
+      required this.isCancelled,
+      this.delayedTime,
+      this.delay})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int routeColorInt = int.parse('0xFF$routeColor');
     String formattedTime = DateFormat('kk:mm').format(time);
-    String remainingTime = getDuration(time.difference(DateTime.now()));
+    String remainingTime =
+        getDuration(time.difference(DateTime.now()), isCancelled);
 
     return InkWell(
       onTap: onTap,
@@ -118,9 +126,14 @@ class BusCard extends StatelessWidget {
     );
   }
 
-  String getDuration(Duration duration) {
+  String getDuration(Duration duration, bool isCancelled) {
     String twoDigits(int n) => n.toString();
     String twoDigitMinutes = twoDigits(duration.inMinutes);
+
+    if (isCancelled) {
+      return "Cancelled";
+    }
+
     if (duration.inMinutes == 0) {
       return "Arriving";
     } else if (duration.inMinutes < 0) {
