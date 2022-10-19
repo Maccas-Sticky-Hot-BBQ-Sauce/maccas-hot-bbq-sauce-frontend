@@ -13,10 +13,10 @@ class RouteStops extends StatefulWidget {
   final int stopId;
   const RouteStops(
       {Key? key,
-        required this.trip,
-        required this.stopTime,
-        this.platform,
-        required this.stopId})
+      required this.trip,
+      required this.stopTime,
+      this.platform,
+      required this.stopId})
       : super(key: key);
 
   @override
@@ -112,18 +112,20 @@ class _RouteStopsState extends State<RouteStops> {
                   });
                   Navigator.pop(context);
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) =>
-                      TripScreen(
-                          tripId: trip.tripId,
-                          stopTime: stopTime,
-                          stopId: stopTime.stopId,
-                          markers: <Marker>{
-                            Marker(
-                              markerId: MarkerId(trip.stopTimes![i].stop!.name),
-                              position: trip.stopTimes![i].stop!.location
-                            )
-                          },
-                      )));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TripScreen(
+                                tripId: trip.tripId,
+                                stopTime: stopTime,
+                                stopId: stopTime.stopId,
+                                markers: <Marker>{
+                                  Marker(
+                                      markerId: MarkerId(
+                                          trip.stopTimes![i].stop!.name),
+                                      position:
+                                          trip.stopTimes![i].stop!.location)
+                                },
+                              )));
                 },
               ),
             Container(

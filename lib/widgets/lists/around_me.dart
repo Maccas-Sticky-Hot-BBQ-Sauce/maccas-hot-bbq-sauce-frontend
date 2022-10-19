@@ -22,53 +22,69 @@ class _AroundMeState extends State<AroundMe> {
     LatLng center = widget.center;
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
-              onTap: () {
-                index >= 3 ? index -= 3 : index = 0;
-                setState(() {});
-              },
-              child: const Icon(
-                Icons.keyboard_arrow_up_sharp,
-                size: 100.0,
+        if (landmarks.isNotEmpty) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  index >= 3 ? index -= 3 : index = 0;
+                  setState(() {});
+                },
+                child: const Icon(
+                  Icons.keyboard_arrow_up_sharp,
+                  size: 100.0,
+                ),
               ),
-            ),
-          ],
-        ),
-        for (int i = index; i < index + 3; i++)
-          LandmarkCard(
-            name: landmarks[i].name,
-            distance: landmarks[i].distance,
-            image: landmarks[i].imgB64,
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LandmarkScreen(
-                            landmark: landmarks[i],
-                            center: center,
-                          )));
-            },
+            ],
           ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
+          for (int i = index; i < index + 3; i++)
+            LandmarkCard(
+              name: landmarks[i].name,
+              distance: landmarks[i].distance,
+              image: landmarks[i].imgB64,
               onTap: () {
-                index + 3 < landmarks.length - 3
-                    ? index += 3
-                    : index = landmarks.length - 3;
-                setState(() {});
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LandmarkScreen(
+                              landmark: landmarks[i],
+                              center: center,
+                            )));
               },
-              child: const Icon(
-                Icons.keyboard_arrow_down_sharp,
-                size: 100.0,
-              ),
             ),
-          ],
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  index + 3 < landmarks.length - 3
+                      ? index += 3
+                      : index = landmarks.length - 3;
+                  setState(() {});
+                },
+                child: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  size: 100.0,
+                ),
+              ),
+            ],
+          ),
+        ] else
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+                child: const Text('Sorry, no more buses for today!',
+                    style: TextStyle(
+                      fontFamily: 'helvetica-neue',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 36,
+                    )),
+              ),
+            ],
+          )
       ],
     );
   }
