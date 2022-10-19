@@ -11,6 +11,7 @@ class GoogleMapDisplay extends StatefulWidget {
   final String? polylineId;
   final List<ShapeModel>? polylineShape;
   final List<StopTimeModel>? stopTimes;
+  final double? zoomLevel;
 
   const GoogleMapDisplay ({
     Key? key,
@@ -19,6 +20,7 @@ class GoogleMapDisplay extends StatefulWidget {
     this.polylineShape,
     this.polylineId,
     this.stopTimes,
+    this.zoomLevel,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,7 @@ class GoogleMapDisplayState extends State<GoogleMapDisplay>{
     String? polylineId = widget.polylineId;
     List<ShapeModel>? polylineShape = widget.polylineShape;
     List<StopTimeModel>? stopTimes = widget.stopTimes;
+    double? zoomLevel = widget.zoomLevel;
     double zoom = (polylineShape != null) ? GoogleMapsUtil.zoom(polylineShape) : 20.0;
 
     return Container(
@@ -50,7 +53,7 @@ class GoogleMapDisplayState extends State<GoogleMapDisplay>{
             Expanded(
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(target: center, zoom: zoom,),
+                initialCameraPosition: CameraPosition(target: center, zoom: (zoomLevel != null) ? zoomLevel : zoom,),
                 markers: (markers != null) ? markers : {},
                 circles: (stopTimes != null) ? GoogleMapsUtil.circleLoc(stopTimes, zoom) : {},
                 polylines: (polylineShape != null) ?
