@@ -38,10 +38,14 @@ class _TimetableState extends State<Timetable> {
     StopModel stop = widget.stop;
 
     Timer.periodic(const Duration(seconds: 10), (timer) {
-      for (int i = index; i < stop.stopTimes.length; i++) {
+      for (int i = 0; i < stop.stopTimes.length; i++) {
         if (stop.stopTimes[i].departure.isAfter(DateTime.now())) {
           stop.stopTimes.removeRange(0, i);
-          index = 0;
+          if (index >= i) {
+            index -= i;
+          } else {
+            index = 0;
+          }
           break;
         }
       }
