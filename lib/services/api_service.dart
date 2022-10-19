@@ -10,26 +10,30 @@ import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 
 class ApiService {
   static Future<StopModel?> getStopData(String stopId) async {
-    DateTime now = DateTime.now();
+    List<int> hourIncrements = [1, 2, 4, 8, 16, 20, 32];
 
-    String fromTime =
-        '${TimeUtil.getZeroPaddedDigit(now.hour)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
-    String toTime =
-        '${TimeUtil.getZeroPaddedDigit(now.hour + 5)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
+    for (int hour in hourIncrements) {
+      DateTime now = DateTime.now();
 
-    try {
-      Uri url = Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.filteredStopsEndpoint}?id=$stopId&fromTime=$fromTime&toTime=$toTime');
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        StopModel model = stopModelFromJson(response.body);
-        return model;
-      } else {
+      String fromTime =
+          '${TimeUtil.getZeroPaddedDigit(now.hour)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
+      String toTime =
+          '${TimeUtil.getZeroPaddedDigit(now.hour + hour)}:${TimeUtil.getZeroPaddedDigit(now.minute)}:${TimeUtil.getZeroPaddedDigit(now.second)}';
+
+      try {
+        Uri url = Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.filteredStopsEndpoint}?id=$stopId&fromTime=$fromTime&toTime=$toTime');
+        var response = await http.get(url);
+        if (response.statusCode == 200) {
+          StopModel model = stopModelFromJson(response.body);
+          if (model.stopTimes.length > 5 || hour == 32) return model;
+        } else {
+          return null;
+        }
+      } catch (e) {
+        log(e.toString());
         return null;
       }
-    } catch (e) {
-      log(e.toString());
-      return null;
     }
   }
 
