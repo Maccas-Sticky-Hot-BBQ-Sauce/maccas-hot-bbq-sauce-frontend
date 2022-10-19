@@ -79,6 +79,7 @@ class _RouteStopsState extends State<RouteStops> {
                 routeColor: stopTime.trip!.route.routeColor,
                 platform: platform ?? "",
                 time: stopTime.arrival,
+                isCancelled: false,
                 onTap: () {}),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 48.53, 70),

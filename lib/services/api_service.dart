@@ -6,6 +6,7 @@ import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/trip_update_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/utilities/time_util.dart';
 
 class ApiService {
@@ -68,6 +69,30 @@ class ApiService {
     } catch (e) {
       log(e.toString());
       return [];
+    }
+  }
+
+  static Future<Map<String, TripUpdateModel>> getTripUpdatesFromStopTimes(
+      List<String> stopIds) async {
+    String queryIds = "";
+    for (String stopId in stopIds) {
+      queryIds += 'id=${stopId}&';
+    }
+
+    try {
+      Uri url = Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.tripUpdateEndpoint}?$queryIds');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        Map<String, TripUpdateModel> model =
+            tripUpdateModelFromJson(response.body);
+        return model;
+      } else {
+        return {};
+      }
+    } catch (e) {
+      log(e.toString());
+      return {};
     }
   }
 }

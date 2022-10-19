@@ -18,6 +18,7 @@ class ApiConstants {
   static String filteredStopsEndpoint = '/stop/filter';
   static String tripsEndpoint = '/trip';
   static String landmarksEndpoint = '/landmark';
+  static String tripUpdateEndpoint = '/realtime/trip-update';
   static String currentStopId =
       const String.fromEnvironment("STOP_ID").isNotEmpty
           ? const String.fromEnvironment("STOP_ID")

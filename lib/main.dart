@@ -6,6 +6,7 @@ import 'package:maccas_sticky_hot_bbq_sauce/constants/api_constants.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/landmark_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/trip_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/trip_update_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/around_me_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/appbar/appbar_stateful.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/lists/timetable.dart';
@@ -53,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   StopModel? currentStop;
   TripModel? trip;
+  Map<String, TripUpdateModel> tripUpdates = {};
   String displayState = 'TIMETABLE';
   List<LandmarkModel> landmarks = [];
 
@@ -67,8 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
         widget.stopId ?? ApiConstants.currentStopId))!;
     landmarks = await ApiService.getLandmarksFromStop(
         widget.stopId ?? ApiConstants.currentStopId);
+    tripUpdates = await ApiService.getTripUpdatesFromStopTimes(
+        currentStop!.stopTimes.map((stopTime) => stopTime.id).toList());
+
     inspect(currentStop);
     inspect(landmarks);
+    inspect(tripUpdates);
     setState(() {});
   }
 
@@ -80,6 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Timer.periodic(const Duration(minutes: 2), (timer) async {
+      tripUpdates = await ApiService.getTripUpdatesFromStopTimes(
+          currentStop!.stopTimes.map((stopTime) => stopTime.id).toList());
+      setState(() {});
+    });
+
     Set<Marker> markers = (currentStop != null)
         ? <Marker>{
             Marker(
@@ -128,38 +140,43 @@ class _MyHomePageState extends State<MyHomePage> {
                     InkWell(
                       onTap: () {},
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                        child: const Text(
-                                'Timetable',
-                                style: TextStyle(
-                                    fontFamily: 'helvetica-neue',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 44,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Color(0xFFF6DB00),
-                                    color: Color(0xFF1B4B87)),
-                              )
-                      ),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 40, 0),
+                          child: const Text(
+                            'Timetable',
+                            style: TextStyle(
+                                fontFamily: 'helvetica-neue',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 44,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xFFF6DB00),
+                                color: Color(0xFF1B4B87)),
+                          )),
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AroundMeScreen(
-                            landmarks: landmarks,
-                            center: currentStop!.location,
-                            stopName: currentStop!.name,
-                        )));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AroundMeScreen(
+                                      landmarks: landmarks,
+                                      center: currentStop!.location,
+                                      stopName: currentStop!.name,
+                                    )));
                       },
                       child: const Text(
-                              'Around Me',
-                              style: TextStyle(
-                                  fontFamily: 'helvetica-neue',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 40,
-                                  color: Color(0xFF666666)),
-                            ),
+                        'Around Me',
+                        style: TextStyle(
+                            fontFamily: 'helvetica-neue',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 40,
+                            color: Color(0xFF666666)),
+                      ),
                     ),
                   ]),
-                  Timetable(stop: currentStop!),
+                  Timetable(
+                    stop: currentStop!,
+                    tripUpdates: tripUpdates,
+                  ),
                 ],
               ),
             ),

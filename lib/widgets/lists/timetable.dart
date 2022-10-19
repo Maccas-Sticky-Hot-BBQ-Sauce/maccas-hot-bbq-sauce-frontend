@@ -2,14 +2,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/models/stop_time_model.dart';
+import 'package:maccas_sticky_hot_bbq_sauce/models/trip_update_model.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/screens/trip_screen.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/buttons/route_button.dart';
 import 'package:maccas_sticky_hot_bbq_sauce/widgets/cards/bus_card.dart';
 
 class Timetable extends StatefulWidget {
-  const Timetable({Key? key, required this.stop}) : super(key: key);
+  const Timetable({Key? key, required this.stop, required this.tripUpdates})
+      : super(key: key);
 
   final StopModel stop;
+  final Map<String, TripUpdateModel> tripUpdates;
 
   @override
   State<Timetable> createState() => _TimetableState();
@@ -155,6 +158,19 @@ class _TimetableState extends State<Timetable> {
                     time: routeFilterId == ""
                         ? stop.stopTimes[i].arrival
                         : filteredStopTimes[i].arrival,
+                    isCancelled:
+                        widget.tripUpdates[stop.stopTimes[i].id] != null &&
+                                (widget.tripUpdates[stop.stopTimes[i].id]!
+                                            .tripRelationship ==
+                                        "UNSCHEDULED" ||
+                                    widget.tripUpdates[stop.stopTimes[i].id]!
+                                            .tripRelationship ==
+                                        "CANCELED" ||
+                                    widget.tripUpdates[stop.stopTimes[i].id]!
+                                            .scheduleRelationship ==
+                                        "SKIPPED")
+                            ? true
+                            : false,
                     onTap: () {
                       Navigator.push(
                           context,
